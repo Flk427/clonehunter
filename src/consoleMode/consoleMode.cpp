@@ -49,6 +49,9 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 			//	CloneHunter::removeUniqueCrc16(filesInfo);
 			//	qWarning() << "FILES COUNT: " << filesInfo.size();
 
+			// For sequental file access.
+			CloneHunter::sortFilesInfoByPath(filesInfo);
+
 			consoleOut("CALC MD5");
 			CloneHunter::calcFilesMd5(filesInfo, params);
 
