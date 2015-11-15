@@ -11,6 +11,7 @@ Licensed under the Apache License, Version 2.0
 namespace CloneHunter
 {
 	int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params);
+	void consoleOut(const QString& text);
 }
 
 #endif // CONSOLE_H

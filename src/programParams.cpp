@@ -3,8 +3,9 @@ Copyright © 2015 Alexey Kudrin. All rights reserved.
 Licensed under the Apache License, Version 2.0
 */
 
-#include <iostream>
+#include <limits>
 #include "programParams.h"
+#include "consoleMode/consoleMode.h"
 
 namespace CloneHunter
 {
@@ -13,7 +14,7 @@ int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 {
 	if (argc < 2)
 	{
-		std::cout << "Type: 'CloneHunter.exe --help' for info." << std::endl;
+		CloneHunter::consoleOut("Type: 'CloneHunter.exe --help' for info.");
 		params.console = false;
 		return 1;
 	}
@@ -48,18 +49,18 @@ int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 		}
 		else if (param == "--help")
 		{
-			std::cout << "Usage: CloneHunter.exe [--console] [--dir=<path to dir>] [--min=<size>] [--max=<size>] [--sort] [--other]" << std::endl << std::endl;
-			std::cout << "  --console: Run in console mode. Default: windowed mode" << std::endl;
-			std::cout << "  --dir: Directory to scan (recursively). Default dir: " << params.path.toLocal8Bit().data() << std::endl;
-			std::cout << "  --min: Mininal file size to scan. Default: " << params.min << std::endl;
-			std::cout << "  --max: Maximal file size to scan. Default: " << std::numeric_limits<int>::max() << std::endl;
-			std::cout << "  --sort: Sort results by path. Default: sort by hash" << std::endl;
-			std::cout << "  --other: Show possibly dup files. Default: false" << std::endl;
+			CloneHunter::consoleOut("Usage: CloneHunter.exe [--console] [--dir=<path to dir>] [--min=<size>] [--max=<size>] [--sort] [--other]");
+			CloneHunter::consoleOut("  --console: Run in console mode. Default: windowed mode");
+			CloneHunter::consoleOut(QString("  --dir: Directory to scan (recursively). Default dir: %1").arg(params.path));
+			CloneHunter::consoleOut(QString("  --min: Mininal file size to scan. Default: %1").arg(params.min));
+			CloneHunter::consoleOut(QString("  --max: Maximal file size to scan. Default: %1").arg(std::numeric_limits<int>::max()));
+			CloneHunter::consoleOut("  --sort: Sort results by path. Default: sort by hash");
+			CloneHunter::consoleOut("  --other: Show possibly dup files. Default: false");
 			return 1;
 		}
 		else {
-			std::cout << "Error: wrong param: '" << argv[i] << "'" << std::endl;
-			std::cout << "Type: 'CloneHunter.exe --help' for info." << std::endl;
+			CloneHunter::consoleOut(QString("Error: wrong param: '%1'").arg(argv[i]));
+			CloneHunter::consoleOut("Type: 'CloneHunter.exe --help' for info.");
 			return 2; // params error;
 		}
 	}
@@ -71,13 +72,13 @@ int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 
 	if (params.console == true)
 	{
-		std::cout << "Path: " << params.path.toLocal8Bit().data() << std::endl;
-		std::cout << "Min file size: " << params.min << std::endl;
-		std::cout << "Max file size: " << params.max << std::endl;
+		CloneHunter::consoleOut("Path: " + params.path);
+		CloneHunter::consoleOut(QString("Min file size: %1").arg(params.min));
+		CloneHunter::consoleOut(QString("Max file size: %1").arg(params.max));
 	}
 	else
 	{
-		std::cout << "Error: no windowed mode yet." << std::endl;
+		CloneHunter::consoleOut("Error: no windowed mode yet.");
 		return 1;
 	}
 

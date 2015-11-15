@@ -3,8 +3,9 @@ Copyright © 2015 Alexey Kudrin. All rights reserved.
 Licensed under the Apache License, Version 2.0
 */
 
-#include <QDebug>
 #include <QString>
+#include <QTextCodec>
+#include <QTextStream>
 #include <time.h>
 #include "src/getFiles.h"
 #include "src/crc16.h"
@@ -18,24 +19,24 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 {
 	time_t tStart = time(0);
 
-	qWarning() << "READ FILES";
+	consoleOut("READ FILES");
 
 	CloneHunter::FilesInfo filesInfo;
 	CloneHunter::getFilesInfo(params, filesInfo);
 
 	int totalFilesCount = filesInfo.size();
 
-	qWarning() << "TOTAL FILES: " << totalFilesCount;
+	consoleOut(QString("TOTAL FILES: %1").arg(totalFilesCount));
 
 	if (filesInfo.size() != 0)
 	{
-		qWarning() << "SORT BY SIZE";
+		consoleOut("SORT BY SIZE");
 		CloneHunter::sortFilesInfoBySize(filesInfo);
 
-		qWarning() << "FILTER BY SIZE";
+		consoleOut("FILTER BY SIZE");
 		CloneHunter::removeUniqueSizes(filesInfo);
 
-		qWarning() << "FILES COUNT: " << filesInfo.size();
+		consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
 
 		if (filesInfo.size() != 0)
 		{
@@ -48,23 +49,23 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 			//	CloneHunter::removeUniqueCrc16(filesInfo);
 			//	qWarning() << "FILES COUNT: " << filesInfo.size();
 
-			qWarning() << "CALC MD5";
+			consoleOut("CALC MD5");
 			CloneHunter::calcFilesMd5(filesInfo, params);
 
-			qWarning() << "SORT BY MD5";
+			consoleOut("SORT BY MD5");
 			CloneHunter::sortFilesInfoByMd5(filesInfo);
 
-			qWarning() << "FILTER BY MD5";
+			consoleOut("FILTER BY MD5");
 			CloneHunter::removeUniqueMd5(filesInfo);
 
-			qWarning() << "FILES COUNT: " << filesInfo.size();
+			consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
 
 			if (params.sort)
 			{
 				CloneHunter::sortFilesInfoByPath(filesInfo);
 			}
 
-			qWarning() << "FILES (WITHOUT EMPTY):";
+			consoleOut("FILES (WITHOUT EMPTY):");
 		}
 	}
 
@@ -76,15 +77,18 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 		if (!filesInfo[i].md5.isEmpty())
 		{
 			notEmptyCount++;
-			qWarning() << filesInfo[i].md5.toLocal8Bit().data() << filesInfo[i].name.toLocal8Bit().data() << filesInfo[i].size;
+			consoleOut(QString("%1 %2 %3").arg(filesInfo[i].md5).arg(filesInfo[i].name).arg(filesInfo[i].size));
 		}
 	}
 
-	qWarning() << "TOTAL NOT EMPTY DUP FILES: " << notEmptyCount << "TOTAL DUP FILES: " << filesInfo.size() << "TOTAL FILES: " << totalFilesCount;
+	consoleOut(QString("TOTAL NOT EMPTY DUP FILES: %1 TOTAL DUP FILES: %2 TOTAL FILES: %3")
+			   .arg(notEmptyCount)
+			   .arg(filesInfo.size())
+			   .arg(totalFilesCount));
 
 	if (params.other)
 	{
-		qWarning() << "OTHER FILES WITH EQUAL SIZES:";
+		consoleOut("OTHER FILES WITH EQUAL SIZES:");
 
 		CloneHunter::sortFilesInfoBySize(filesInfo);
 
@@ -93,13 +97,22 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 			if (filesInfo[i].md5.isEmpty())
 			{
 				notEmptyCount++;
-				qWarning() << filesInfo[i].name.toLocal8Bit().data() << filesInfo[i].size;
+				consoleOut(QString("%1 %2").arg(filesInfo[i].name).arg(filesInfo[i].size));
 			}
 		}
 	}
 
-	qWarning() << "Time: " << (time(0) - tStart);
+	consoleOut(QString("Time: %1").arg(time(0) - tStart));
 	return 0;
+}
+
+void consoleOut(const QString& text)
+{
+	QTextStream out(stdout);
+#if defined(__WIN32)
+	out.setCodec("IBM866");
+#endif
+	out << text << endl;
 }
 
 }

@@ -62,7 +62,7 @@ void calcFilesCrc16(FilesInfo& filesInfo)
 		i++;
 		hundreed++;
 
-		if (it->size > 100000 && hundreed > 10 || it->size > 50000 && hundreed > 100 || hundreed > 1000)
+		if (((it->size > 100000) && (hundreed > 10)) || ((it->size > 50000) && (hundreed > 100)) || (hundreed > 1000))
 		{
 			hundreed = 1;
 			qDebug() << i;

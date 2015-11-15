@@ -4,11 +4,11 @@ Licensed under the Apache License, Version 2.0
 */
 
 #include <QCryptographicHash>
-#include <QDebug>
 #include <QFile>
 #include <QByteArray>
 #include "types.h"
 #include "calcMd5.h"
+#include "consoleMode/consoleMode.h"
 
 namespace CloneHunter
 {
@@ -37,10 +37,10 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 			i++;
 			hundreed++;
 
-			if (it->size > 10000000 && hundreed > 1 || it->size > 300000 && hundreed > 10 || it->size > 10000 && hundreed > 50 || it->size > 2000 && hundreed > 100 || hundreed > 1000)
+			if ((it->size > 10000000 && hundreed > 1) || (it->size > 300000 && hundreed > 10) || (it->size > 10000 && hundreed > 50) || (it->size > 2000 && hundreed) > 100 || hundreed > 1000)
 			{
 				hundreed = 1;
-				qDebug() << i << it->size;
+				CloneHunter::consoleOut(QString("%1 %2").arg(i).arg(it->size));
 			}
 
 			QFile file;

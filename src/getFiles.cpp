@@ -3,7 +3,6 @@ Copyright © 2015 Alexey Kudrin. All rights reserved.
 Licensed under the Apache License, Version 2.0
 */
 
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QStringList>
