@@ -25,24 +25,31 @@ static bool fileMd5LessThan( const FILEINFO & e1, const FILEINFO & e2 )
 	}
 }
 
+static unsigned getFileSizes(const FilesInfo& filesInfo, const PROGRAMPARAMS& params)
+{
+	unsigned total(0);
+
+	for (FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
+	{
+		if (it->size >= params.min && (it->size <= params.max))
+		{
+			total += it->size;
+		}
+	}
+
+	return total;
+}
+
 void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 {
-	int i(0);
-	int hundreed(1);
+	unsigned totalSize = getFileSizes(filesInfo, params);
+	unsigned scannedSize(0);
+	unsigned oldCto = 99;
 
 	for (FilesInfo::iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
 		if (it->size >= params.min && (it->size <= params.max))
 		{
-			i++;
-			hundreed++;
-
-			if ((it->size > 10000000 && hundreed > 1) || (it->size > 300000 && hundreed > 10) || (it->size > 10000 && hundreed > 50) || (it->size > 2000 && hundreed) > 100 || hundreed > 1000)
-			{
-				hundreed = 1;
-				CloneHunter::consoleOut(QString("%1 %2").arg(i).arg(it->size));
-			}
-
 			QFile file;
 			file.setFileName(it->name);
 
@@ -57,6 +64,18 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 
 				QByteArray md5hash = hash.result();
 				it->md5 = QString(md5hash.toHex());
+			}
+
+			scannedSize += it->size;
+			unsigned cto = (100.0 * scannedSize / totalSize);
+
+			if (cto % 10 == 0)
+			{
+				if (oldCto != cto)
+				{
+					oldCto = cto;
+					CloneHunter::consoleOut(QString("%1 %").arg(cto));
+				}
 			}
 		}
 	}
