@@ -41,13 +41,15 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 		if (filesInfo.size() != 0)
 		{
 
-			//	qWarning() << "CALC CRC16";
-			//	CloneHunter::calcFilesCrc16(filesInfo);
-			//	qWarning() << "SORT BY CRC16";
-			//	CloneHunter::sortFilesInfoByCrc16(filesInfo);
-			//	qWarning() << "FILTER BY CRC16";
-			//	CloneHunter::removeUniqueCrc16(filesInfo);
-			//	qWarning() << "FILES COUNT: " << filesInfo.size();
+			/*
+				qWarning() << "CALC CRC16";
+				CloneHunter::calcFilesCrc16(filesInfo);
+				qWarning() << "SORT BY CRC16";
+				CloneHunter::sortFilesInfoByCrc16(filesInfo);
+				qWarning() << "FILTER BY CRC16";
+				CloneHunter::removeUniqueCrc16(filesInfo);
+				qWarning() << "FILES COUNT: " << filesInfo.size();
+			*/
 
 			// For sequental file access.
 			CloneHunter::sortFilesInfoByPath(filesInfo);
