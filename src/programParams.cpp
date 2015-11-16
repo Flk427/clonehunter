@@ -3,12 +3,22 @@ Copyright © 2015 Alexey Kudrin. All rights reserved.
 Licensed under the Apache License, Version 2.0
 */
 
+#include <QString>
+#include <QTextDecoder>
+#include <QTextCodec>
 #include <limits>
 #include "programParams.h"
 #include "consoleMode/consoleMode.h"
 
 namespace CloneHunter
 {
+
+QString decodeParam(char* arg)
+{
+	QByteArray inputText = arg; //текст в кодировке cp866
+	QTextDecoder *decoder = QTextCodec::codecForName("CP1251")->makeDecoder(QTextCodec::IgnoreHeader);
+	return decoder->toUnicode(inputText);
+}
 
 int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 {
@@ -19,9 +29,10 @@ int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 		return 1;
 	}
 
+
 	for (int i=1; i < argc; ++i)
 	{
-		QString param = QString(argv[i]);
+		QString param = decodeParam(argv[i]);
 
 		if (param == "--console")
 		{
