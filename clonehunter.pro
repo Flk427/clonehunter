@@ -7,14 +7,14 @@
 #
 #-------------------------------------------------
 
-#QT       += core
-#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #CONFIG -= qt
 
 TARGET = clonehunter
 TEMPLATE = app
 
-VERSION = 0.1.3
+VERSION = 0.1.4
 
 CONFIG += console
 
@@ -24,7 +24,8 @@ SOURCES += main.cpp \
 	src/calcMd5.cpp \
 	src/programParams.cpp \
 	src/consoleMode/consoleMode.cpp \
-    src/quickSearch.cpp
+	src/quickSearch.cpp \
+	src/guiMode/MainWindow.cpp
 
 HEADERS += \
 	src/getFiles.h \
@@ -33,4 +34,8 @@ HEADERS += \
 	src/calcMd5.h \
 	src/programParams.h \
 	src/consoleMode/consoleMode.h \
-    src/quickSearch.h
+	src/quickSearch.h \
+	src/guiMode/MainWindow.h
+
+FORMS += \
+	src/guiMode/MainWindow.ui
