@@ -14,10 +14,14 @@ Licensed under the Apache License, Version 2.0
 #include "src/getFiles.h"
 #include "src/crc16.h"
 #include "src/calcMd5.h"
+#include "src/quickSearch.h"
 #include "consoleMode.h"
 
 namespace CloneHunter
 {
+
+static void searchQuick(CloneHunter::FilesInfo& filesInfo);
+static void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params);
 
 int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 {
@@ -34,44 +38,15 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 
 	if (filesInfo.size() != 0)
 	{
-		consoleOut("SORT BY SIZE");
-		CloneHunter::sortFilesInfoBySize(filesInfo);
-
-		consoleOut("FILTER BY SIZE");
-		CloneHunter::removeUniqueSizes(filesInfo);
-
-		consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
-
 		if (filesInfo.size() != 0)
 		{
-
-			/*
-				qWarning() << "CALC CRC16";
-				CloneHunter::calcFilesCrc16(filesInfo);
-				qWarning() << "SORT BY CRC16";
-				CloneHunter::sortFilesInfoByCrc16(filesInfo);
-				qWarning() << "FILTER BY CRC16";
-				CloneHunter::removeUniqueCrc16(filesInfo);
-				qWarning() << "FILES COUNT: " << filesInfo.size();
-			*/
-
-			// For sequental file access.
-			CloneHunter::sortFilesInfoByPath(filesInfo);
-
-			consoleOut("CALC MD5");
-			CloneHunter::calcFilesMd5(filesInfo, params);
-
-			consoleOut("SORT BY MD5");
-			CloneHunter::sortFilesInfoByMd5(filesInfo);
-
-			consoleOut("FILTER BY MD5");
-			CloneHunter::removeUniqueMd5(filesInfo);
-
-			consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
-
-			if (params.sort)
+			if (params.quick)
 			{
-				CloneHunter::sortFilesInfoByPath(filesInfo);
+				searchQuick(filesInfo);
+			}
+			else
+			{
+				searchDeep(filesInfo, params);
 			}
 
 			consoleOut("FILES (WITHOUT EMPTY):");
@@ -86,7 +61,12 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 		if (!filesInfo[i].md5.isEmpty())
 		{
 			notEmptyCount++;
-			consoleOut(QString("%1 %2 %3").arg(filesInfo[i].md5).arg(filesInfo[i].name).arg(filesInfo[i].size));
+			consoleOut(QString("%1 %2 %3").arg(filesInfo[i].md5).arg(filesInfo[i].path + "/" + filesInfo[i].name).arg(filesInfo[i].size));
+		}
+		else if (params.quick)
+		{
+			notEmptyCount++;
+			consoleOut(QString("%2 %3").arg(filesInfo[i].path + "/" + filesInfo[i].name).arg(filesInfo[i].size));
 		}
 	}
 
@@ -106,7 +86,7 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 			if (filesInfo[i].md5.isEmpty())
 			{
 				notEmptyCount++;
-				consoleOut(QString("%1 %2").arg(filesInfo[i].name).arg(filesInfo[i].size));
+				consoleOut(QString("%1 %2").arg(filesInfo[i].path + "/" + filesInfo[i].name).arg(filesInfo[i].size));
 			}
 		}
 	}
@@ -129,6 +109,57 @@ void consoleOut(const QString& text)
 #endif
 
 	out << endl;
+}
+
+void searchQuick(CloneHunter::FilesInfo& filesInfo)
+{
+	consoleOut("SORT BY NAME AND SIZE");
+	CloneHunter::sortFilesInfoByNameSize(filesInfo);
+
+	consoleOut("FILTER BY NAME AND SIZE");
+	CloneHunter::removeUniqueNamesSizes(filesInfo);
+
+	consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
+}
+
+void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params)
+{
+	consoleOut("SORT BY SIZE");
+	CloneHunter::sortFilesInfoBySize(filesInfo);
+
+	consoleOut("FILTER BY SIZE");
+	CloneHunter::removeUniqueSizes(filesInfo);
+
+	consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
+
+	/*
+	qWarning() << "CALC CRC16";
+	CloneHunter::calcFilesCrc16(filesInfo);
+	qWarning() << "SORT BY CRC16";
+	CloneHunter::sortFilesInfoByCrc16(filesInfo);
+	qWarning() << "FILTER BY CRC16";
+	CloneHunter::removeUniqueCrc16(filesInfo);
+	qWarning() << "FILES COUNT: " << filesInfo.size();
+	*/
+
+	// For sequental file access.
+	CloneHunter::sortFilesInfoByPath(filesInfo);
+
+	consoleOut("CALC MD5");
+	CloneHunter::calcFilesMd5(filesInfo, params);
+
+	consoleOut("SORT BY MD5");
+	CloneHunter::sortFilesInfoByMd5(filesInfo);
+
+	consoleOut("FILTER BY MD5");
+	CloneHunter::removeUniqueMd5(filesInfo);
+
+	consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
+
+	if (params.sort)
+	{
+		CloneHunter::sortFilesInfoByPath(filesInfo);
+	}
 }
 
 }

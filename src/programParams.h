@@ -20,6 +20,7 @@ struct PROGRAMPARAMS
 	int sort;
 	bool console;
 	bool other;
+	bool quick;
 
 	PROGRAMPARAMS()
 	{
@@ -29,6 +30,7 @@ struct PROGRAMPARAMS
 		sort = false;
 		console = false;
 		other = false;
+		quick = false;
 	}
 };
 

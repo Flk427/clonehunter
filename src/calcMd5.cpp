@@ -51,7 +51,7 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 		if (it->size >= params.min && (it->size <= params.max))
 		{
 			QFile file;
-			file.setFileName(it->name);
+			file.setFileName(it->path + "/" + it->name);
 
 			if (file.open(QIODevice::ReadOnly))
 			{

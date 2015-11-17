@@ -23,9 +23,9 @@ static bool fileSizeGreaterThan( const FILEINFO & e1, const FILEINFO & e2 )
 	}
 }
 
-static bool fileNameLessThan( const FILEINFO & e1, const FILEINFO & e2 )
+static bool fileFullNameLessThan( const FILEINFO & e1, const FILEINFO & e2 )
 {
-	if (e1.name.toUpper() < e2.name.toUpper())
+	if ((e1.path + e1.name).toUpper() < (e2.path + e2.name).toUpper())
 	{
 		return true;
 	}
@@ -38,7 +38,7 @@ static bool fileNameLessThan( const FILEINFO & e1, const FILEINFO & e2 )
 static FilesInfo readDir(const QString& path/*, qint64 min, qint64 max*/)
 {
 	FilesInfo filesInfo;
-	FILEINFO fileSize;
+	FILEINFO file;
 
 	QDir dir;
 	dir.setPath(path);
@@ -65,14 +65,11 @@ static FilesInfo readDir(const QString& path/*, qint64 min, qint64 max*/)
 		}
 		else
 		{
-			fileSize.size = fileInfo.size();
-
-//			if (fileSize.size >= min && (max == 0 || fileSize.size <= max))
-//			{
-				fileSize.name = fileInfo.absolutePath() + "/" + fileInfo.fileName();
-				fileSize.lastModified = fileInfo.lastModified();
-				filesInfo.push_back(fileSize);
-//			}
+			file.size = fileInfo.size();
+			file.path = fileInfo.absolutePath();
+			file.name =  fileInfo.fileName();
+			file.lastModified = fileInfo.lastModified();
+			filesInfo.push_back(file);
 		}
 	}
 
@@ -139,7 +136,7 @@ void removeUniqueSizes(FilesInfo& filesInfo)
 
 void sortFilesInfoByPath(FilesInfo& filesInfo)
 {
-	qSort(filesInfo.begin(), filesInfo.end(), fileNameLessThan);
+	qSort(filesInfo.begin(), filesInfo.end(), fileFullNameLessThan);
 }
 
 }

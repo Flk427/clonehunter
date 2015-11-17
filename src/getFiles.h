@@ -9,7 +9,8 @@ Licensed under the Apache License, Version 2.0
 #include "types.h"
 #include "programParams.h"
 
-namespace CloneHunter {
+namespace CloneHunter
+{
 	/*!
 	\brief getFilesInfo Return files info for target directory
 	\param [in] params

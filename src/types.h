@@ -15,6 +15,7 @@ namespace CloneHunter
 
 struct FILEINFO
 {
+	QString path;
 	QString name;
 	qint64 size;
 	QDateTime lastModified;
@@ -23,6 +24,7 @@ struct FILEINFO
 
 	FILEINFO()
 	{
+		path = "";
 		name = "";
 		size = 0;
 		crc16 = 0;

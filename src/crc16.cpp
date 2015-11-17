@@ -69,7 +69,7 @@ void calcFilesCrc16(FilesInfo& filesInfo)
 		}
 
 		QFile file;
-		file.setFileName(it->name);
+		file.setFileName(it->path + "/" + it->name);
 		if (file.open(QIODevice::ReadOnly))
 		{
 			QByteArray content = file.readAll();

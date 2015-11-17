@@ -49,13 +49,19 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 		{
 			params.other = true;
 		}
+		else if (param == "--quick")
+		{
+			params.quick = true;
+		}
 		else if (param == "--help")
 		{
-			CloneHunter::consoleOut("Usage: CloneHunter.exe [--console] [--dir=<path to dir>] [--min=<size>] [--max=<size>] [--sort] [--other]");
+			CloneHunter::consoleOut("Usage: CloneHunter.exe [--console] [--dir=<path to dir>] [--min=<size>] [--max=<size>] [--sort] [--other] [--quick]");
 			CloneHunter::consoleOut("  --console: Run in console mode. Default: windowed mode");
 			CloneHunter::consoleOut(QString("  --dir: Directory to scan (recursively). Default dir: %1").arg(params.path));
-			CloneHunter::consoleOut(QString("  --min: Mininal file size to scan. Default: %1").arg(params.min));
-			CloneHunter::consoleOut(QString("  --max: Maximal file size to scan. Default: %1").arg((std::numeric_limits<int>::max)()));
+			CloneHunter::consoleOut("  --quick: Quick scan. Compare file names and sizes only. Default: false");
+			CloneHunter::consoleOut("           Without this param will search dup. files even with different names.");
+			CloneHunter::consoleOut(QString("  --min: Mininal file size for content scan. Default: %1").arg(params.min));
+			CloneHunter::consoleOut(QString("  --max: Maximal file size for content scan. Default: %1").arg((std::numeric_limits<int>::max)()));
 			CloneHunter::consoleOut("  --sort: Sort results by path. Default: sort by hash");
 			CloneHunter::consoleOut("  --other: Show possibly dup files. Default: false");
 			return 1;

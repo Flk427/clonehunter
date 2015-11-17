@@ -14,7 +14,7 @@
 TARGET = clonehunter
 TEMPLATE = app
 
-VERSION = 0.1.0
+VERSION = 0.1.3
 
 CONFIG += console
 
@@ -23,7 +23,8 @@ SOURCES += main.cpp \
 	src/crc16.cpp \
 	src/calcMd5.cpp \
 	src/programParams.cpp \
-	src/consoleMode/consoleMode.cpp
+	src/consoleMode/consoleMode.cpp \
+    src/quickSearch.cpp
 
 HEADERS += \
 	src/getFiles.h \
@@ -31,4 +32,5 @@ HEADERS += \
 	src/crc16.h \
 	src/calcMd5.h \
 	src/programParams.h \
-	src/consoleMode/consoleMode.h
+	src/consoleMode/consoleMode.h \
+    src/quickSearch.h
