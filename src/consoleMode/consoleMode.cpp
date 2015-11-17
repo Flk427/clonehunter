@@ -114,7 +114,7 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 void consoleOut(const QString& text)
 {
 	QTextStream out(stdout);
-#if defined(__WIN32)
+#if defined(__WIN32) || defined(_WIN32)
 	out.setCodec("IBM866");
 #endif
 	out << text << endl;
