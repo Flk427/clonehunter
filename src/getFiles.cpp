@@ -35,7 +35,7 @@ static bool fileFullNameLessThan( const FILEINFO & e1, const FILEINFO & e2 )
 	}
 }
 
-static FilesInfo readDir(const QString& path/*, qint64 min, qint64 max*/)
+static FilesInfo readDir(const QString& path)
 {
 	FilesInfo filesInfo;
 	FILEINFO file;

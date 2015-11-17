@@ -25,9 +25,9 @@ static bool fileMd5LessThan( const FILEINFO & e1, const FILEINFO & e2 )
 	}
 }
 
-static unsigned getFileSizes(const FilesInfo& filesInfo, const PROGRAMPARAMS& params)
+static qint64 getFileSizes(const FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 {
-	unsigned total(0);
+	qint64 total(0);
 
 	for (FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
@@ -42,12 +42,17 @@ static unsigned getFileSizes(const FilesInfo& filesInfo, const PROGRAMPARAMS& pa
 
 void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 {
-	unsigned totalSize = getFileSizes(filesInfo, params);
-	unsigned scannedSize(0);
+	qint64 totalSize = getFileSizes(filesInfo, params);
+	qint64 scannedSize(0);
 	unsigned oldCto = 99;
+	unsigned i(0);
+
+	CloneHunter::consoleOut(QString("TOTAL SIZE: %1 COUNT: %2").arg(totalSize).arg(filesInfo.size()));
 
 	for (FilesInfo::iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
+		i++;
+
 		if (it->size >= params.min && (it->size <= params.max))
 		{
 			QFile file;
@@ -74,7 +79,7 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 				if (oldCto != cto)
 				{
 					oldCto = cto;
-					CloneHunter::consoleOut(QString("%1 %").arg(cto));
+					CloneHunter::consoleOut(QString("%1%").arg(cto));
 				}
 			}
 		}
