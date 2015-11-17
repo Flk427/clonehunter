@@ -7,6 +7,7 @@ Licensed under the Apache License, Version 2.0
 #define PROGRAMPARAMS_H
 
 #include <QString>
+#include <QStringList>
 
 namespace CloneHunter
 {
@@ -31,7 +32,7 @@ struct PROGRAMPARAMS
 	}
 };
 
-int parseParams(PROGRAMPARAMS& params, int argc, char *argv[]);
+int parseParams(PROGRAMPARAMS& params, QStringList arguments);
 
 }
 

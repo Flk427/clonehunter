@@ -13,26 +13,17 @@ Licensed under the Apache License, Version 2.0
 namespace CloneHunter
 {
 
-QString decodeParam(char* arg)
+int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 {
-	QByteArray inputText = arg; //текст в кодировке cp866
-	QTextDecoder *decoder = QTextCodec::codecForName("CP1251")->makeDecoder(QTextCodec::IgnoreHeader);
-	return decoder->toUnicode(inputText);
-}
-
-int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
-{
-	if (argc < 2)
+	if (arguments.count() < 2)
 	{
 		CloneHunter::consoleOut("Type: 'CloneHunter.exe --help' for info.");
-		params.console = false;
 		return 1;
 	}
 
-
-	for (int i=1; i < argc; ++i)
+	for (QStringList::const_iterator it = ++arguments.begin(); it != arguments.end(); ++it)
 	{
-		QString param = decodeParam(argv[i]);
+		QString param = *it;
 
 		if (param == "--console")
 		{
@@ -64,13 +55,13 @@ int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 			CloneHunter::consoleOut("  --console: Run in console mode. Default: windowed mode");
 			CloneHunter::consoleOut(QString("  --dir: Directory to scan (recursively). Default dir: %1").arg(params.path));
 			CloneHunter::consoleOut(QString("  --min: Mininal file size to scan. Default: %1").arg(params.min));
-			CloneHunter::consoleOut(QString("  --max: Maximal file size to scan. Default: %1").arg(std::numeric_limits<int>::max()));
+			CloneHunter::consoleOut(QString("  --max: Maximal file size to scan. Default: %1").arg((std::numeric_limits<int>::max)()));
 			CloneHunter::consoleOut("  --sort: Sort results by path. Default: sort by hash");
 			CloneHunter::consoleOut("  --other: Show possibly dup files. Default: false");
 			return 1;
 		}
 		else {
-			CloneHunter::consoleOut(QString("Error: wrong param: '%1'").arg(argv[i]));
+			CloneHunter::consoleOut(QString("Error: wrong param: '%1'").arg(param));
 			CloneHunter::consoleOut("Type: 'CloneHunter.exe --help' for info.");
 			return 2; // params error;
 		}
@@ -78,7 +69,7 @@ int parseParams(PROGRAMPARAMS& params, int argc, char *argv[])
 
 	if (params.max == 0)
 	{
-		params.max = std::numeric_limits<int>::max();
+		params.max = (std::numeric_limits<int>::max)();
 	}
 
 	if (params.console == true)

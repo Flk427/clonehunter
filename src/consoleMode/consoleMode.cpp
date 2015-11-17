@@ -3,6 +3,10 @@ Copyright © 2015 Alexey Kudrin. All rights reserved.
 Licensed under the Apache License, Version 2.0
 */
 
+#if defined(__WIN32) || defined(_WIN32)
+#include <Windows.h>
+#endif
+
 #include <QString>
 #include <QTextCodec>
 #include <QTextStream>
@@ -113,11 +117,18 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 
 void consoleOut(const QString& text)
 {
+	// http://stackoverflow.com/questions/4766301/windows-console-and-qt-unicode-text
+
 	QTextStream out(stdout);
+
 #if defined(__WIN32) || defined(_WIN32)
-	out.setCodec("IBM866");
+	// out.setCodec("IBM866"); // for windows console out (hardcoded codec example).
+	WriteConsoleW(GetStdHandle(STD_OUTPUT_HANDLE), text.utf16(), text.size(), NULL, NULL);
+#else
+	out << text;
 #endif
-	out << text << endl;
+
+	out << endl;
 }
 
 }
