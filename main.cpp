@@ -4,6 +4,7 @@ Licensed under the Apache License, Version 2.0
 */
 
 #include <QApplication>
+#include <QTranslator>
 #include <QStringList>
 #include "src/programParams.h"
 #include "src/consoleMode/consoleMode.h"
@@ -11,14 +12,23 @@ Licensed under the Apache License, Version 2.0
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-	QStringList arguments = a.arguments();
+	QApplication app(argc, argv);
+
+	QStringList arguments = app.arguments();
 
 	CloneHunter::PROGRAMPARAMS params;
 
 	if (0 != CloneHunter::parseParams(params, arguments))
 	{
 		return 1;
+	}
+
+	QTranslator translator;
+
+	if (params.lang == "ru")
+	{
+		translator.load(":/translations/clonehunter_ru.qm");
+		app.installTranslator(&translator);
 	}
 
 	if (params.console)
@@ -29,7 +39,7 @@ int main(int argc, char *argv[])
 	{
 		MainWindow w;
 		w.show();
-		return a.exec();
+		return app.exec();
 	}
 
 	return 0;
