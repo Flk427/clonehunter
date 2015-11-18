@@ -21,6 +21,7 @@ struct PROGRAMPARAMS
 	bool console;
 	bool other;
 	bool quick;
+	QString lang;
 
 	PROGRAMPARAMS()
 	{
@@ -28,9 +29,10 @@ struct PROGRAMPARAMS
 		min = 3;
 		max = 0;
 		sort = false;
-		console = false;
+		console = true;
 		other = false;
 		quick = false;
+		lang = "en";
 	}
 };
 

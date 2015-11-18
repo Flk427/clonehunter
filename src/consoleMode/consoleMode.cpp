@@ -27,14 +27,14 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 {
 	time_t tStart = time(0);
 
-	consoleOut("READ FILES");
+	consoleOut(QObject::tr("Read files"));
 
 	CloneHunter::FilesInfo filesInfo;
 	CloneHunter::getFilesInfo(params, filesInfo);
 
 	int totalFilesCount = filesInfo.size();
 
-	consoleOut(QString("TOTAL FILES: %1").arg(totalFilesCount));
+	consoleOut(QString(QObject::tr("Total files: %1")).arg(totalFilesCount));
 
 	if (filesInfo.size() != 0)
 	{
@@ -49,7 +49,7 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 				searchDeep(filesInfo, params);
 			}
 
-			consoleOut("FILES (WITHOUT EMPTY):");
+			consoleOut(QObject::tr("Files (without empty):"));
 		}
 	}
 
@@ -57,7 +57,6 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 
 	for (int i = 0; i < filesInfo.count(); i++)
 	{
-		// if (filesInfo[i].size >= params.min && (filesInfo[i].size <= params.max))
 		if (!filesInfo[i].md5.isEmpty())
 		{
 			notEmptyCount++;
@@ -70,14 +69,14 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 		}
 	}
 
-	consoleOut(QString("TOTAL NOT EMPTY DUP FILES: %1 TOTAL DUP FILES: %2 TOTAL FILES: %3")
+	consoleOut(QString(QObject::tr("Total not empty dup files: %1 Total dup files: %2 Total files: %3"))
 			   .arg(notEmptyCount)
 			   .arg(filesInfo.size())
 			   .arg(totalFilesCount));
 
 	if (params.other)
 	{
-		consoleOut("OTHER FILES WITH EQUAL SIZES:");
+		consoleOut(QObject::tr("Other files with equal sizes:"));
 
 		CloneHunter::sortFilesInfoBySize(filesInfo);
 
@@ -91,7 +90,7 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 		}
 	}
 
-	consoleOut(QString("Time: %1").arg(time(0) - tStart));
+	consoleOut(QString(QObject::tr("Time: %1")).arg(time(0) - tStart));
 	return 0;
 }
 
@@ -113,24 +112,24 @@ void consoleOut(const QString& text)
 
 void searchQuick(CloneHunter::FilesInfo& filesInfo)
 {
-	consoleOut("SORT BY NAME AND SIZE");
+	consoleOut(QObject::tr("Sort by name and size"));
 	CloneHunter::sortFilesInfoByNameSize(filesInfo);
 
-	consoleOut("FILTER BY NAME AND SIZE");
+	consoleOut(QObject::tr("Filter by name and size"));
 	CloneHunter::removeUniqueNamesSizes(filesInfo);
 
-	consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
+	consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
 }
 
 void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params)
 {
-	consoleOut("SORT BY SIZE");
+	consoleOut(QObject::tr("Sort by size"));
 	CloneHunter::sortFilesInfoBySize(filesInfo);
 
-	consoleOut("FILTER BY SIZE");
+	consoleOut(QObject::tr("Filter by size"));
 	CloneHunter::removeUniqueSizes(filesInfo);
 
-	consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
+	consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
 
 	/*
 	qWarning() << "CALC CRC16";
@@ -145,16 +144,16 @@ void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPAR
 	// For sequental file access.
 	CloneHunter::sortFilesInfoByPath(filesInfo);
 
-	consoleOut("CALC MD5");
+	consoleOut(QObject::tr("Calc MD5"));
 	CloneHunter::calcFilesMd5(filesInfo, params);
 
-	consoleOut("SORT BY MD5");
+	consoleOut(QObject::tr("Sort by MD5"));
 	CloneHunter::sortFilesInfoByMd5(filesInfo);
 
-	consoleOut("FILTER BY MD5");
+	consoleOut(QObject::tr("Filter by MD5"));
 	CloneHunter::removeUniqueMd5(filesInfo);
 
-	consoleOut(QString("FILES COUNT: %1").arg(filesInfo.size()));
+	consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
 
 	if (params.sort)
 	{

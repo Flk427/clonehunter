@@ -47,7 +47,7 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 	unsigned oldCto = 99;
 	unsigned i(0);
 
-	CloneHunter::consoleOut(QString("TOTAL SIZE: %1 COUNT: %2").arg(totalSize).arg(filesInfo.size()));
+	CloneHunter::consoleOut(QString(QObject::tr("Total size: %1 Count: %2")).arg(totalSize).arg(filesInfo.size()));
 
 	for (FilesInfo::iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{

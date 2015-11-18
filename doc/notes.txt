@@ -1,7 +1,7 @@
 ﻿GUI examples
 
 \widgets\animation\animatedtiles\release\animatedtiles.exe
-\widgets\desktop\systray\release\systray.exe
+\widgets\animation\appchooser\release\appchooser.exe\widgets\desktop\systray\release\systray.exe
 \widgets\desktop\screenshot\release\screenshot.exe
 \widgets\dialogs\configdialog\release\configdialog.exe
 \widgets\dialogs\findfiles\release\findfiles.exe
@@ -35,3 +35,12 @@
 \widgets\tools\i18n\release\i18n.exe
 \widgets\tools\plugandpaint
 \widgets\widgets
+\widgets\widgets\styles
+\widgets\widgets\stylesheet
+\widgets\painting\affine
+\widgets\painting\composition\release\composition.exe
+\widgets\painting\deform\release\deform.exe
+\widgets\painting\pathstroke\release\pathstroke.exe
+\widgets\richtext\syntaxhighlighter\release\syntaxhighlighter.exe
+\widgets\richtext\textedit\release\textedit.exe
+\widgets\scroller\graphicsview\release\graphicsview.exe

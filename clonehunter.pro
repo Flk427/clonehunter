@@ -18,6 +18,8 @@ VERSION = 0.1.4
 
 CONFIG += console
 
+TRANSLATIONS = clonehunter_ru.ts
+
 SOURCES += main.cpp \
 	src/getFiles.cpp \
 	src/crc16.cpp \
@@ -39,3 +41,9 @@ HEADERS += \
 
 FORMS += \
 	src/guiMode/MainWindow.ui
+
+RESOURCES += \
+	clonehunter.qrc
+
+OTHER_FILES += \
+	clonehunter_ru.qm
