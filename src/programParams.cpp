@@ -16,12 +16,6 @@ namespace CloneHunter
 
 int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 {
-//	if (arguments.count() < 2)
-//	{
-//		CloneHunter::consoleOut("Type: 'CloneHunter.exe --help' for info.");
-//		return 1;
-//	}
-
 	for (QStringList::const_iterator it = ++arguments.begin(); it != arguments.end(); ++it)
 	{
 		QString param = *it;
@@ -87,18 +81,6 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 	{
 		params.max = (std::numeric_limits<int>::max)();
 	}
-
-	if (params.console == true)
-	{
-		CloneHunter::consoleOut("Path: " + params.path);
-		CloneHunter::consoleOut(QString("Min file size: %1").arg(params.min));
-		CloneHunter::consoleOut(QString("Max file size: %1").arg(params.max));
-	}
-//	else
-//	{
-//		CloneHunter::consoleOut("Error: no windowed mode yet.");
-//		return 1;
-//	}
 
 	return 0;
 }

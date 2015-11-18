@@ -33,6 +33,10 @@ int main(int argc, char *argv[])
 
 	if (params.console)
 	{
+		CloneHunter::consoleOut(QObject::tr("Path: ") + params.path);
+		CloneHunter::consoleOut(QString(QObject::tr("Min file size: %1")).arg(params.min));
+		CloneHunter::consoleOut(QString(QObject::tr("Max file size: %1")).arg(params.max));
+
 		return CloneHunter::startConsoleMode(params);
 	}
 	else
