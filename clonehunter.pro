@@ -18,7 +18,7 @@ VERSION = 0.1.4
 
 CONFIG += console
 
-TRANSLATIONS = clonehunter_ru.ts
+TRANSLATIONS = i18n/clonehunter_ru.ts
 
 SOURCES += main.cpp \
 	src/getFiles.cpp \
@@ -46,4 +46,5 @@ RESOURCES += \
 	clonehunter.qrc
 
 OTHER_FILES += \
-	clonehunter_ru.qm
+	i18n/clonehunter_ru.ts \
+	i18n/clonehunter_ru.qm

@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
 	if (params.lang == "ru")
 	{
-		translator.load(":/translations/clonehunter_ru.qm");
+		translator.load(":/i18n/clonehunter_ru.qm");
 		app.installTranslator(&translator);
 	}
 
