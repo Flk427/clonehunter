@@ -43,7 +43,7 @@ FORMS += \
 	src/guiMode/MainWindow.ui
 
 RESOURCES += \
-	clonehunter.qrc
+	res/clonehunter.qrc
 
 OTHER_FILES += \
 	i18n/clonehunter_ru.ts \
