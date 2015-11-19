@@ -22,6 +22,7 @@ struct PROGRAMPARAMS
 	bool other;
 	bool quick;
 	QString lang;
+	bool empty;
 
 	PROGRAMPARAMS()
 	{
@@ -33,6 +34,7 @@ struct PROGRAMPARAMS
 		other = false;
 		quick = false;
 		lang = "en";
+		empty = false;
 	}
 };
 

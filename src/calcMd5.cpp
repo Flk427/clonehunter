@@ -53,7 +53,7 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 	{
 		i++;
 
-		if (it->size >= params.min && (it->size <= params.max))
+		if (it->size != 0 && it->size >= params.min && (it->size <= params.max))
 		{
 			QFile file;
 			file.setFileName(it->path + "/" + it->name);
