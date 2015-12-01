@@ -60,13 +60,22 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 
 			if (file.open(QIODevice::ReadOnly))
 			{
-				QByteArray content = file.readAll();
-				file.close();
-
+				QByteArray content;
 				QCryptographicHash hash(QCryptographicHash::Md5);
 				hash.reset();
-				hash.addData(content);
 
+				do
+				{
+					content = file.read(8*1024*1024);
+
+					if (content.size() != 0)
+					{
+						hash.addData(content);
+					}
+				}
+				while (content.size() != 0);
+
+				file.close();
 				QByteArray md5hash = hash.result();
 				it->md5 = QString(md5hash.toHex());
 			}
