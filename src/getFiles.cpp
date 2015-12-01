@@ -43,7 +43,7 @@ static FilesInfo readDir(const QString& path)
 	QDir dir;
 	dir.setPath(path);
 
-	QFileInfoList entries = dir.entryInfoList();
+	QFileInfoList entries = dir.entryInfoList(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot); // exclude "." and ".."
 
 	for (int i = 0; i < entries.count(); i++)
 	{
@@ -51,16 +51,13 @@ static FilesInfo readDir(const QString& path)
 
 		if (fileInfo.isDir())
 		{
-			if (fileInfo.fileName() != "." && fileInfo.fileName() != "..")
+			if (path.endsWith('/') || path.endsWith('\\'))
 			{
-				if (path.endsWith('/') || path.endsWith('\\'))
-				{
-					filesInfo.append(readDir(path + fileInfo.fileName()/*, min, max*/));
-				}
-				else
-				{
-					filesInfo.append(readDir(path + "/" + fileInfo.fileName()/*, min, max*/));
-				}
+				filesInfo.append(readDir(path + fileInfo.fileName()/*, min, max*/));
+			}
+			else
+			{
+				filesInfo.append(readDir(path + "/" + fileInfo.fileName()/*, min, max*/));
 			}
 		}
 		else
