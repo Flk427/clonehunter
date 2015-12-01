@@ -43,7 +43,7 @@ static FilesInfo readDir(const QString& path)
 	QDir dir;
 	dir.setPath(path);
 
-	QFileInfoList entries = dir.entryInfoList(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot); // exclude "." and ".."
+	QFileInfoList entries = dir.entryInfoList(QDir::AllDirs | QDir::Files | QDir::NoSymLinks | QDir::Hidden | QDir::NoDotAndDotDot); // exclude "." and ".."
 
 	for (int i = 0; i < entries.count(); i++)
 	{
