@@ -92,19 +92,25 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 	return 0;
 }
 
-void consoleOut(const QString& text)
+void consoleOut(const QString& text, QString& lang)
 {
 	// http://stackoverflow.com/questions/4766301/windows-console-and-qt-unicode-text
 
 	QTextStream out(stdout);
 
 #if defined(__WIN32) || defined(_WIN32)
-	// out.setCodec("IBM866"); // for windows console out (hardcoded codec example).
-	WriteConsoleW(GetStdHandle(STD_OUTPUT_HANDLE), text.utf16(), text.size(), NULL, NULL);
-#else
-	out << text;
+	if (lang == "ru")
+	{
+		out.setCodec("cp866"); // for windows console out (hardcoded codec example).
+	}
+
+	// Cannot redirect output to file by "prog.exe > filename":
+	// WriteConsoleW(GetStdHandle(STD_OUTPUT_HANDLE), text.utf16(),  text.size(), NULL, NULL);
+
+	// CP1251 output: std::cout << text.toLocal8Bit().data() << std::endl;
 #endif
 
+	out << text;
 	out << endl;
 }
 
