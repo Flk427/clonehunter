@@ -71,6 +71,17 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 					if (content.size() != 0)
 					{
 						hash.addData(content);
+
+						{ // TODO: вынести отдельно
+							scannedSize += content.size();
+							unsigned cto = (100.0 * scannedSize / totalSize);
+
+							if (oldCto / 10 != cto / 10)
+							{
+								oldCto = cto;
+								CloneHunter::consoleOut(QString("%1%").arg(cto - cto % 10));
+							}
+						}
 					}
 				}
 				while (content.size() != 0);
@@ -78,18 +89,6 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 				file.close();
 				QByteArray md5hash = hash.result();
 				it->md5 = QString(md5hash.toHex());
-			}
-
-			scannedSize += it->size;
-			unsigned cto = (100.0 * scannedSize / totalSize);
-
-			if (cto % 10 == 0)
-			{
-				if (oldCto != cto)
-				{
-					oldCto = cto;
-					CloneHunter::consoleOut(QString("%1%").arg(cto));
-				}
 			}
 		}
 	}
