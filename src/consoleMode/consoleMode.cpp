@@ -98,7 +98,7 @@ void consoleOut(const QString& text, QString& lang)
 
 	QTextStream out(stdout);
 
-#if defined(__WIN32) || defined(_WIN32)
+#if defined(Q_OS_WIN)
 	if (lang == "ru")
 	{
 		out.setCodec("cp866"); // for windows console out (hardcoded codec example).
