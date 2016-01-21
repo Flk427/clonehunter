@@ -57,7 +57,7 @@ static FilesInfo readDir(const QString& path)
 			}
 			else
 			{
-				filesInfo.append(readDir(path + "/" + fileInfo.fileName()/*, min, max*/));
+				filesInfo.append(readDir(path + QDir::separator() + fileInfo.fileName()/*, min, max*/));
 			}
 		}
 		else
@@ -73,15 +73,13 @@ static FilesInfo readDir(const QString& path)
 	return filesInfo;
 }
 
+/*
+	TODO: Заменить FilesInfo на QList<FilesInfo>. Для поиска сразу в нескольких каталогах.
+	При этом следить, чтобы каталоги не были подкаталогами друг друга.
+*/
 void getFilesInfo(const PROGRAMPARAMS& params, FilesInfo& filesInfo)
 {
 	QString rootDir = params.path;
-
-	if (rootDir.endsWith(':'))
-	{
-		rootDir.append("/");
-	}
-
 	filesInfo = readDir(rootDir/*, params.min, params.max*/);
 }
 

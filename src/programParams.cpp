@@ -7,6 +7,7 @@ Licensed under the Apache License, Version 2.0
 #include <QString>
 #include <QTextDecoder>
 #include <QTextCodec>
+#include <QDir>
 #include <limits>
 #include "programParams.h"
 #include "consoleMode/consoleMode.h"
@@ -35,6 +36,11 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 		else if (param.startsWith("--dir=", Qt::CaseInsensitive))
 		{
 			params.path = param.right(param.size() - 6);
+
+			if (!params.path.endsWith('\\') && !params.path.endsWith('/'))
+			{
+				params.path.append(QDir::separator());
+			}
 		}
 		else if (param.startsWith("--min=", Qt::CaseInsensitive))
 		{
