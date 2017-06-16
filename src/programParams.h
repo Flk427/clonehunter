@@ -30,7 +30,7 @@ struct PROGRAMPARAMS
 		min = 3;
 		max = 0;
 		sort = false;
-		console = true;
+		console = false;
 		other = false;
 		quick = false;
 		lang = "en";

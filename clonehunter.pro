@@ -16,7 +16,36 @@ TEMPLATE = app
 
 VERSION = 0.1.4
 
-CONFIG += console
+#CONFIG += console
+
+CONFIG(release, release|debug) {
+    win32-msvc* {
+#        MSVC_VER = $$(VisualStudioVersion)
+#        equals(MSVC_VER, 14.0) {
+#            message("msvc 2015")
+#        }
+#        equals(MSVC_VER, 10.0) {
+#            message("msvc 2010")
+#        }
+#        message($$MSVC_VER)
+
+        contains(QMAKE_COMPILER_DEFINES, _MSC_VER=1800) {
+        # MSVS2013
+        }
+
+        contains(QMAKE_COMPILER_DEFINES, _MSC_VER=1600) {
+            # MSVS2010
+            message(Compiler: MSVC)
+            DESTDIR = $${PWD}/bin/windows
+        }
+
+    }
+
+#	win32-mingw {
+#	}
+
+    message(Place release binaries to $$DESTDIR)
+}
 
 TRANSLATIONS = i18n/clonehunter_ru.ts
 
@@ -27,7 +56,8 @@ SOURCES += main.cpp \
 	src/programParams.cpp \
 	src/consoleMode/consoleMode.cpp \
 	src/quickSearch.cpp \
-	src/guiMode/MainWindow.cpp
+	src/guiMode/MainWindow.cpp \
+    src/guiMode/ui/autotooltipdelegate.cpp
 
 HEADERS += \
 	src/getFiles.h \
@@ -37,7 +67,8 @@ HEADERS += \
 	src/programParams.h \
 	src/consoleMode/consoleMode.h \
 	src/quickSearch.h \
-	src/guiMode/MainWindow.h
+	src/guiMode/MainWindow.h \
+    src/guiMode/ui/autotooltipdelegate.h
 
 FORMS += \
 	src/guiMode/MainWindow.ui

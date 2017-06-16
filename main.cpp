@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
 	CloneHunter::PROGRAMPARAMS params;
 
-	if (0 != CloneHunter::parseParams(params, arguments))
+	if (0 != CloneHunter::parseParams(params, arguments) && params.console)
 	{
 		return 1;
 	}

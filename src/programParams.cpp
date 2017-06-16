@@ -68,7 +68,7 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 			params.empty = true;
 			params.quick = false;
 		}
-		else if (param == "--help")
+		else if (param == "--help" || param == "/?" || param == "?")
 		{
 			CloneHunter::consoleOut(QObject::tr("Usage: CloneHunter.exe [--console] [--dir=<path to dir>] [--min=<size>] [--max=<size>] [--sort] [--other] [--quick|--empty] [--lang={en|ru}]"));
 			CloneHunter::consoleOut(QObject::tr("  --console: Run in console mode. Default: console (windowed in future) mode"));
