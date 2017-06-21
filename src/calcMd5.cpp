@@ -15,6 +15,7 @@ namespace CloneHunter
 
 static bool fileMd5LessThan( const FILEINFO & e1, const FILEINFO & e2 )
 {
+	//if (QString(e1.md5array.toHex()) < QString(e2.md5array.toHex()))
 	if (e1.md5 < e2.md5)
 	{
 		return true;
@@ -87,8 +88,9 @@ void calcFilesMd5(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 				while (content.size() != 0);
 
 				file.close();
-				QByteArray md5hash = hash.result();
-				it->md5 = QString(md5hash.toHex());
+//				QByteArray md5hash = hash.result();
+//				it->md5 = QString(md5hash.toHex());
+				it->md5 = hash.result();
 			}
 		}
 	}
@@ -104,7 +106,8 @@ void removeUniqueMd5(FilesInfo& filesInfo)
 	//	4 <- current
 	//	4
 
-		QString previousMd5("");
+//		QString previousMd5("");
+		QByteArray previousMd5;
 		FilesInfo::iterator work = filesInfo.begin();
 
 		while (work != filesInfo.end())

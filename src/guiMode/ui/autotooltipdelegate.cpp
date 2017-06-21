@@ -1,4 +1,4 @@
-#include "autotooltipdelegate.h"
+#include "AutoToolTipDelegate.h"
 
 AutoToolTipDelegate::AutoToolTipDelegate(QObject* parent) : QStyledItemDelegate(parent)
 {

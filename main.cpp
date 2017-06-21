@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 	if (0 != CloneHunter::parseParams(params, arguments) && params.console)
 	{
-		return 1;
+		return 0;
 	}
 
 	QTranslator translator;

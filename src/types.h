@@ -1,5 +1,5 @@
 /*
-Copyright © 2015 Alexey Kudrin. All rights reserved.
+Author 2015 Alexey Kudrin. All rights reserved.
 Licensed under the Apache License, Version 2.0
 */
 
@@ -19,16 +19,13 @@ struct FILEINFO
 	QString name;
 	qint64 size;
 	QDateTime lastModified;
-	unsigned crc16;
-	QString md5;
+	QByteArray md5;
 
 	FILEINFO()
 	{
 		path = "";
 		name = "";
 		size = 0;
-		crc16 = 0;
-		md5 = "";
 	}
 };
 

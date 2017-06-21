@@ -10,7 +10,7 @@ Licensed under the Apache License, Version 2.0
 
 namespace CloneHunter
 {
-	int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params);
+	int startConsoleMode(const PROGRAMPARAMS& params);
 	void consoleOut(const QString& text, QString& lang = QString("ru"));
 }
 

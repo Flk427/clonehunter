@@ -3,7 +3,7 @@
 #include <QTreeWidget>
 //#include <QListWidget>
 #include <QVBoxLayout>
-#include "ui/autotooltipdelegate.h"
+#include "ui/AutoToolTipDelegate.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {

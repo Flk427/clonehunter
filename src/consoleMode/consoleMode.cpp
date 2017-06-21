@@ -12,7 +12,6 @@ Licensed under the Apache License, Version 2.0
 #include <QTextStream>
 #include <time.h>
 #include "src/getFiles.h"
-#include "src/crc16.h"
 #include "src/calcMd5.h"
 #include "src/quickSearch.h"
 #include "consoleMode.h"
@@ -20,22 +19,38 @@ Licensed under the Apache License, Version 2.0
 namespace CloneHunter
 {
 
-static void searchQuick(CloneHunter::FilesInfo& filesInfo);
-static void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params);
+/*!
+\brief searchQuick
+\param [out] filesInfo список одинаковых файлов (см. полное описание)
 
-static unsigned printQuickDupFiles(const CloneHunter::FilesInfo& filesInfo, const bool empty);
-static unsigned printDupFiles(const CloneHunter::FilesInfo& filesInfo, const bool quickMode = false);
-static void printOtherFiles(const CloneHunter::FilesInfo& filesInfo, const bool quickMode);
-static void printEmptyFiles(const CloneHunter::FilesInfo& filesInfo);
+Быстрый поиск по совпадению имён и размеров файлов.
+Файлы, имена и размеры которых совпадают считаются одинаковыми,
+независимо от их содержимого.
+*/
+static void searchQuick(FilesInfo& filesInfo);
+/*!
+\brief searchQuick
+\param [out] filesInfo список одинаковых файлов (см. полное описание)
 
-int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
+Поиск по содержимому файлов. Долгий.
+Файлы с одинаковым содержимым считаются одинаковыми даже
+если их имена не совпадают.
+*/
+static void searchDeep(FilesInfo& filesInfo, const PROGRAMPARAMS& params);
+
+static unsigned printQuickDupFiles(const FilesInfo& filesInfo, const bool empty);
+static unsigned printDupFiles(const FilesInfo& filesInfo, const bool quickMode = false);
+static void printOtherFiles(const FilesInfo& filesInfo, const bool quickMode);
+static void printEmptyFiles(const FilesInfo& filesInfo);
+
+int startConsoleMode(const PROGRAMPARAMS& params)
 {
 	time_t tStart = time(0);
 
 	consoleOut(QObject::tr("Read files"));
 
-	CloneHunter::FilesInfo filesInfo;
-	CloneHunter::getFilesInfo(params, filesInfo);
+	FilesInfo filesInfo;
+	getFilesInfo(params, filesInfo);
 
 	int totalFilesCount = filesInfo.count();
 
@@ -45,14 +60,14 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 	{
 		if (params.empty && !params.quick)
 		{
-			CloneHunter::sortFilesInfoByPath(filesInfo);
+			sortFilesInfoByPath(filesInfo);
 			printEmptyFiles(filesInfo);
 		}
 		else if (params.quick)
 		{
 			searchQuick(filesInfo);
 
-			CloneHunter::sortFilesInfoByNameSize(filesInfo);
+			sortFilesInfoByNameSize(filesInfo);
 
 			consoleOut(QObject::tr("Files (without empty):"));
 			unsigned notEmptyCount = printQuickDupFiles(filesInfo, params.empty);
@@ -82,7 +97,7 @@ int startConsoleMode(const CloneHunter::PROGRAMPARAMS& params)
 			if (params.other)
 			{
 				consoleOut(QObject::tr("Other files with equal sizes:"));
-				CloneHunter::sortFilesInfoBySize(filesInfo);
+				sortFilesInfoBySize(filesInfo);
 				printOtherFiles(filesInfo, false);
 			}
 		}
@@ -114,64 +129,54 @@ void consoleOut(const QString& text, QString& lang)
 	out << endl;
 }
 
-void searchQuick(CloneHunter::FilesInfo& filesInfo)
+void searchQuick(FilesInfo& filesInfo)
 {
 	consoleOut(QObject::tr("Sort by name and size"));
-	CloneHunter::sortFilesInfoByNameSize(filesInfo);
+	sortFilesInfoByNameSize(filesInfo);
 
 	consoleOut(QObject::tr("Filter by name and size"));
-	CloneHunter::removeUniqueNamesSizes(filesInfo);
+	removeUniqueNamesSizes(filesInfo);
 
 	consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
 }
 
-void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params)
+void searchDeep(FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 {
 	consoleOut(QObject::tr("Sort by size"));
-	CloneHunter::sortFilesInfoBySize(filesInfo);
+	sortFilesInfoBySize(filesInfo);
 
 	consoleOut(QObject::tr("Filter by size"));
-	CloneHunter::removeUniqueSizes(filesInfo);
+	removeUniqueSizes(filesInfo);
 
 	consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
 
-	/*
-	qWarning() << "CALC CRC16";
-	CloneHunter::calcFilesCrc16(filesInfo);
-	qWarning() << "SORT BY CRC16";
-	CloneHunter::sortFilesInfoByCrc16(filesInfo);
-	qWarning() << "FILTER BY CRC16";
-	CloneHunter::removeUniqueCrc16(filesInfo);
-	qWarning() << "FILES COUNT: " << filesInfo.size();
-	*/
-
 	// For sequental file access.
-	CloneHunter::sortFilesInfoByPath(filesInfo);
+	sortFilesInfoByPath(filesInfo);
 
 	consoleOut(QObject::tr("Calc MD5"));
-	CloneHunter::calcFilesMd5(filesInfo, params);
+	calcFilesMd5(filesInfo, params);
 
 	consoleOut(QObject::tr("Sort by MD5"));
-	CloneHunter::sortFilesInfoByMd5(filesInfo);
+	sortFilesInfoByMd5(filesInfo);
 
 	consoleOut(QObject::tr("Filter by MD5"));
-	CloneHunter::removeUniqueMd5(filesInfo);
+	removeUniqueMd5(filesInfo);
 
 	consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
 
 	if (params.sort)
 	{
-		CloneHunter::sortFilesInfoByPath(filesInfo);
+		sortFilesInfoByPath(filesInfo);
 	}
 }
 
-void printEmptyFiles(const CloneHunter::FilesInfo& filesInfo)
+void printEmptyFiles(const FilesInfo& filesInfo)
 {
 	consoleOut(QObject::tr("Empty files:"));
 
 	int emptyCount(0);
 
-	for (CloneHunter::FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
+	for (FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
 		if (it->size == 0)
 		{
@@ -181,11 +186,11 @@ void printEmptyFiles(const CloneHunter::FilesInfo& filesInfo)
 	}
 }
 
-unsigned printQuickDupFiles(const CloneHunter::FilesInfo& filesInfo, const bool empty)
+unsigned printQuickDupFiles(const FilesInfo& filesInfo, const bool empty)
 {
 	unsigned notEmptyCount(0);
 
-	for (CloneHunter::FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
+	for (FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
 		if (it->size != 0 || empty)
 		{
@@ -197,16 +202,16 @@ unsigned printQuickDupFiles(const CloneHunter::FilesInfo& filesInfo, const bool 
 	return notEmptyCount;
 }
 
-unsigned printDupFiles(const CloneHunter::FilesInfo& filesInfo, const bool quickMode)
+unsigned printDupFiles(const FilesInfo& filesInfo, const bool quickMode)
 {
 	unsigned notEmptyCount(0);
 
-	for (CloneHunter::FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
+	for (FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
 		if (!it->md5.isEmpty())
 		{
 			notEmptyCount++;
-			consoleOut(QString("%1 %2 %3").arg(it->md5).arg(it->path + "/" + it->name).arg(it->size));
+			consoleOut(QString("%1 %2 %3").arg(QString(it->md5.toHex())).arg(it->path + "/" + it->name).arg(it->size));
 		}
 		else if (quickMode && it->size != 0)
 		{
@@ -218,9 +223,9 @@ unsigned printDupFiles(const CloneHunter::FilesInfo& filesInfo, const bool quick
 	return notEmptyCount;
 }
 
-void printOtherFiles(const CloneHunter::FilesInfo& filesInfo, const bool quickMode)
+void printOtherFiles(const FilesInfo& filesInfo, const bool quickMode)
 {
-	for (CloneHunter::FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
+	for (FilesInfo::const_iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
 	{
 		if (quickMode)
 		{

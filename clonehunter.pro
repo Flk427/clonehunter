@@ -16,7 +16,7 @@ TEMPLATE = app
 
 VERSION = 0.1.4
 
-#CONFIG += console
+CONFIG += console
 
 CONFIG(release, release|debug) {
     win32-msvc* {
@@ -51,24 +51,27 @@ TRANSLATIONS = i18n/clonehunter_ru.ts
 
 SOURCES += main.cpp \
 	src/getFiles.cpp \
-	src/crc16.cpp \
 	src/calcMd5.cpp \
 	src/programParams.cpp \
 	src/consoleMode/consoleMode.cpp \
 	src/quickSearch.cpp \
 	src/guiMode/MainWindow.cpp \
-    src/guiMode/ui/autotooltipdelegate.cpp
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.cpp \
+    src/guiMode/ui/AutoToolTipDelegate.cpp \
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.cpp
 
 HEADERS += \
 	src/getFiles.h \
 	src/types.h \
-	src/crc16.h \
 	src/calcMd5.h \
 	src/programParams.h \
 	src/consoleMode/consoleMode.h \
 	src/quickSearch.h \
 	src/guiMode/MainWindow.h \
-    src/guiMode/ui/autotooltipdelegate.h
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.h \
+    src/guiMode/ui/AutoToolTipDelegate.h \
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.h \
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionFileInfo.h
 
 FORMS += \
 	src/guiMode/MainWindow.ui
