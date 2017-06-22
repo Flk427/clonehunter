@@ -21,7 +21,7 @@ void FilesDecisionListView::setFilesInfo(const CloneHunter::FilesInfo& filesInfo
 
 	if (m)
 	{
-		m->setFilesInfo(filesInfo);
+		m->setFilesInfo(filesInfo); // TODO: Заменить на класс-контейнер данных со слотами/сигналами изменения данных или модели.
 	}
 }
 
