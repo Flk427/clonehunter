@@ -20,6 +20,7 @@ public:
 
 private:
 //	FilesDecisionModel* m_filesDecisionModel;
+	void _init();
 };
 
 #endif // FILESDECISIONLISTVIEW_H

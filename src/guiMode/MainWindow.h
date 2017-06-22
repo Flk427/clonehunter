@@ -7,12 +7,16 @@ namespace Ui {
 class MainWindow;
 }
 
+////////////////////////
+//
 class CListWidget : public QWidget
 {
 public:
 	explicit CListWidget(QWidget* parent = 0);
 	void init();
 };
+//
+////////////////////////
 
 class MainWindow : public QMainWindow
 {

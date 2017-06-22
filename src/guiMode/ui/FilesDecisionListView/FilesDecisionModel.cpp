@@ -18,9 +18,9 @@ void FilesDecisionModel::setFilesInfo(const CloneHunter::FilesInfo& filesInfo)
 }
 
 
-QModelIndex FilesDecisionModel::index(int row, int column, const QModelIndex& parent) const
-{
-}
+//QModelIndex FilesDecisionModel::index(int row, int column, const QModelIndex& parent) const
+//{
+//}
 
 //QModelIndex FilesDecisionModel::parent(const QModelIndex& child) const
 //{
