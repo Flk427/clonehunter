@@ -16,7 +16,7 @@ public:
 	explicit FilesDecisionListView(QWidget* parent);
 	~FilesDecisionListView();
 
-	void setFilesInfo(const CloneHunter::FilesInfo& filesInfo);
+	void setFilesInfo(const FilesDecisionFiles& filesDecisionFiles);
 
 private:
 //	FilesDecisionModel* m_filesDecisionModel;

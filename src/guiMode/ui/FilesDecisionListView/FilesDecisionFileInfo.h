@@ -17,6 +17,14 @@ struct FilesDecisionFileInfo
 	QByteArray hash;
 	bool marked;
 
+	FilesDecisionFileInfo() :
+		path(""),
+		name(""),
+		size(0),
+		marked(false)
+	{
+	}
+
 	FilesDecisionFileInfo(const CloneHunter::FILEINFO& fi)
 	{
 		path = fi.path;
@@ -30,6 +38,6 @@ struct FilesDecisionFileInfo
 
 typedef QList<FilesDecisionFileInfo> FilesDecisionFileCopiesList;
 
-typedef QHash<QByteArray, FilesDecisionFileCopiesList> FilesDecisionFiles;
+typedef QList<FilesDecisionFileCopiesList> FilesDecisionFiles;
 
 #endif // FILESDECISIONFILEINFO_H
