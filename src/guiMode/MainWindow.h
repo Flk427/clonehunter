@@ -27,6 +27,7 @@ public:
 	~MainWindow();
 
 	void test();
+	void test2();
 
 private:
 	Ui::MainWindow *ui;

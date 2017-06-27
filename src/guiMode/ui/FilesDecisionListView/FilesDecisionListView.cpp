@@ -3,12 +3,19 @@
 #include "../AutoToolTipDelegate.h"
 #include "FilesDecisionModel.h"
 
-FilesDecisionListView::FilesDecisionListView(QWidget* parent) :
+FilesDecisionListView::FilesDecisionListView(TreeRootItem* root, QWidget* parent) :
 	QTreeView(parent)
 {
 //	m_filesDecisionModel = new FilesDecisionModel();
 //	setModel(m_filesDecisionModel);
-	_init();
+	_init(root);
+
+//	FilesDecisionModel* m = qobject_cast<FilesDecisionModel*>(model());
+
+//	if (m)
+//	{
+//		m->setFilesInfo(root);
+//	}
 }
 
 FilesDecisionListView::~FilesDecisionListView()
@@ -16,37 +23,38 @@ FilesDecisionListView::~FilesDecisionListView()
 	//	delete m_filesDecisionModel;
 }
 
-/*!
-\brief FilesDecisionListView::setFilesInfo
-\param filesDecisionFiles Список списков структур FilesDecisionFileInfo.
-*/
-void FilesDecisionListView::setFilesInfo(const FilesDecisionFiles& filesDecisionFiles)
+void FilesDecisionListView::setFilesInfo(TreeRootItem* root)
 {
 	FilesDecisionModel* m = qobject_cast<FilesDecisionModel*>(model());
 
 	if (m)
 	{
-		m->setFilesInfo(filesDecisionFiles);
+		m->setFilesInfo(root);
 	}
 }
 
-void FilesDecisionListView::_init()
+/*!
+\brief FilesDecisionListView::setFilesInfo
+\param filesDecisionFiles Список списков структур FilesDecisionFileInfo.
+*/
+//void FilesDecisionListView::setFilesInfo(const FilesDecisionFiles& filesDecisionFiles)
+//{
+//	FilesDecisionModel* m = qobject_cast<FilesDecisionModel*>(model());
+
+//	if (m)
+//	{
+//		m->setFilesInfo(filesDecisionFiles);
+//	}
+//}
+
+void FilesDecisionListView::_init(TreeRootItem* root)
 {
 //	setItemDelegate(new QStyledItemDelegate());
 
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	setModel(new FilesDecisionModel());
+	setModel(new FilesDecisionModel(root));
 	setItemDelegate(new AutoToolTipDelegate(this));
 	setAnimated(true);
-
-	FilesDecisionFileInfo info;
-	info.name = "asdasda";
-	info.path = "c:\\asdasd";
-
-	FilesDecisionFileCopiesList list1 = FilesDecisionFileCopiesList() << info << info;
-	FilesDecisionFiles filesTree = FilesDecisionFiles() << list1 << list1;
-
-	setFilesInfo(filesTree);
 
 //	setModel(new QStandardItemModel());
 //	QStandardItemModel* m = qobject_cast<QStandardItemModel*>(model());

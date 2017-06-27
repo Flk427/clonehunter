@@ -4,6 +4,7 @@
 #include <QAbstractItemModel>
 #include "../../../types.h"
 #include "FilesDecisionFileInfo.h"
+#include "TreeItems/TreeRootItem.h"
 
 /*!
 \brief The FilesDecisionModel class
@@ -17,9 +18,11 @@ class FilesDecisionModel : public QAbstractItemModel
 	Q_OBJECT
 
 public:
-	FilesDecisionModel();
+	FilesDecisionModel(TreeRootItem* root);
+	virtual ~FilesDecisionModel();
 
-	void setFilesInfo(const FilesDecisionFiles& filesDecisionFiles);
+//	void setFilesInfo(const FilesDecisionFiles& filesDecisionFiles);
+	void setFilesInfo(TreeRootItem* rootItem);
 
 	// QAbstractItemModel interface
 public:
@@ -32,7 +35,8 @@ public:
 	virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
 private:
-	FilesDecisionFiles m_filesDecisionFiles;
+	//FilesDecisionFiles m_filesDecisionFiles;
+	TreeRootItem* m_rootItem;
 
 
 	// QAbstractItemModel interface

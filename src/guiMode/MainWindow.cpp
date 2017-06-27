@@ -8,11 +8,13 @@
 #include <QVBoxLayout>
 #include "ui/AutoToolTipDelegate.h"
 #include "ui/FilesDecisionListView/FilesDecisionListView.h"
+#include "ui/FilesDecisionListView/TreeItems/TreeInnerItem.h"
+#include "ui/FilesDecisionListView/TreeItems/TreeRootItem.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	test();
+	test2();
 }
 
 MainWindow::~MainWindow()
@@ -24,13 +26,58 @@ void MainWindow::test()
 {
 //	QAbstractItemDelegate* itemDelegate;
 	//new CListWidget(ui->centralwidget);
-	new FilesDecisionListView(ui->centralwidget);
+	FilesDecisionListView* v = new FilesDecisionListView(nullptr, ui->centralwidget);
+
+	FilesDecisionFileInfo info1;
+	info1.name = "asdasda";
+	info1.path = "c:\\asdasdasd";
+
+	FilesDecisionFileInfo info2;
+	info2.name = "zxczxc";
+	info2.path = "c:\\zxczxczxc";
+
+	FilesDecisionFileCopiesList list1 = FilesDecisionFileCopiesList() << info1 << info2;
+
+	FilesDecisionFileInfo info3;
+	info3.name = "fhgjlkjgh";
+	info3.path = "c:\\fhgjlkjghzxc";
+
+	FilesDecisionFileInfo info4;
+	info4.name = "nbfkbsdc";
+	info4.path = "c:\\nbfkbsdcxcz,mxvc";
+
+	FilesDecisionFileCopiesList list2 = FilesDecisionFileCopiesList() << info3 << info4;
+
+	FilesDecisionFiles filesTree = FilesDecisionFiles() << list1 << list2;
+
+//	v->setFilesInfo(filesTree);
 
 	ui->treeWidget->setItemDelegate(new AutoToolTipDelegate( ui->treeWidget ));
 
 //	ui->listView->setItemDelegate(itemDelegate);
 
-//	ui->
+	//	ui->
+}
+
+void MainWindow::test2()
+{
+	QList<QVariant> data = QList<QVariant>() << "1asd" << "2zxc" << "3qwe";
+
+	TreeRootItem* root = new TreeRootItem(data);
+
+	QList<QVariant> data1 = QList<QVariant>() << "11asd" << "12zxc" << "13qwe";
+
+	TreeInnerItem* in1 = new TreeInnerItem(data1, root);
+
+	root->appendChild(in1);
+
+	QList<QVariant> data2 = QList<QVariant>() << "21asd" << "22zxc" << "23qwe";
+
+	TreeInnerItem* in2 = new TreeInnerItem(data2, root);
+
+	root->appendChild(in2);
+
+	FilesDecisionListView* v = new FilesDecisionListView(root, ui->centralwidget);
 }
 
 CListWidget::CListWidget(QWidget* parent) : QWidget(parent)
