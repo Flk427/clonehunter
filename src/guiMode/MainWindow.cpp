@@ -14,6 +14,8 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	ui->treeWidget->setItemDelegate(new AutoToolTipDelegate( ui->treeWidget ));
+
 	test2();
 }
 
@@ -26,7 +28,7 @@ void MainWindow::test()
 {
 //	QAbstractItemDelegate* itemDelegate;
 	//new CListWidget(ui->centralwidget);
-	FilesDecisionListView* v = new FilesDecisionListView(nullptr, ui->centralwidget);
+	new FilesDecisionListView(nullptr, ui->centralwidget);
 
 	FilesDecisionFileInfo info1;
 	info1.name = "asdasda";
@@ -52,8 +54,6 @@ void MainWindow::test()
 
 //	v->setFilesInfo(filesTree);
 
-	ui->treeWidget->setItemDelegate(new AutoToolTipDelegate( ui->treeWidget ));
-
 //	ui->listView->setItemDelegate(itemDelegate);
 
 	//	ui->
@@ -61,7 +61,7 @@ void MainWindow::test()
 
 void MainWindow::test2()
 {
-	QList<QVariant> data = QList<QVariant>() << "1asd" << "2zxc" << "3qwe";
+	QList<QVariant> data = QList<QVariant>() << "1asd" << "2zxc";
 
 	TreeRootItem* root = new TreeRootItem(data);
 
@@ -69,9 +69,9 @@ void MainWindow::test2()
 
 	TreeInnerItem* in1 = new TreeInnerItem(data1, root);
 
-	root->appendChild(in1);
+	root->appendChild(/*<fileName> , */ in1);
 
-	QList<QVariant> data2 = QList<QVariant>() << "21asd" << "22zxc" << "23qwe";
+	QList<QVariant> data2 = QList<QVariant>() << "21asd" << "22zxc" << "23qwe" << "24dfgh";
 
 	TreeInnerItem* in2 = new TreeInnerItem(data2, root);
 
