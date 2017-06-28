@@ -26,6 +26,9 @@ MainWindow::~MainWindow()
 void MainWindow::test()
 {
 	FilesDecisionListView* v = new FilesDecisionListView(ui->centralwidget);
+	QFont font;
+	font.setFamily("Consolas");
+	v->setFont(font);
 	v->setItemDelegate(new AutoToolTipDelegate(v));
 
 	FilesDecisionFileInfo info1;
@@ -49,6 +52,7 @@ void MainWindow::test()
 	info4.path = "c:\\nbfkbsdcxczmxvcsdkbskjcsjdksldnck";
 
 	FilesDecisionFileCopiesList* list2 = new FilesDecisionFileCopiesList();
+
 	list2->append(info3);
 	list2->append(info4);
 
