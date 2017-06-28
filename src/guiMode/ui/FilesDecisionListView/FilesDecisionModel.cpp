@@ -25,14 +25,7 @@ QModelIndex FilesDecisionModel::index(int row, int column, const QModelIndex& pa
 
 	if (!parent.isValid())
 	{
-		if (row < m_rootItem->childCount())
-		{
-			return createIndex(row, column, nullptr);
-		}
-		else
-		{
-			return QModelIndex();
-		}
+		return createIndex(row, column, nullptr);
 	}
 	else
 	{
@@ -43,10 +36,6 @@ QModelIndex FilesDecisionModel::index(int row, int column, const QModelIndex& pa
 			if (childItem)
 			{
 				return createIndex(row, column, childItem);
-			}
-			else
-			{
-				return QModelIndex();
 			}
 		}
 	}
@@ -87,19 +76,12 @@ int FilesDecisionModel::rowCount(const QModelIndex& parent) const
 		{
 			if (parent.row() < m_rootItem->childItems().size())
 			{
-				int count = m_rootItem->child(parent.row())->dataCount();
-				return count;
+				return m_rootItem->child(parent.row())->dataCount();
 			}
-			else
-			{
-				return 0;
-			}
-		}
-		else
-		{
-			return 0;
 		}
 	}
+
+	return 0;
 }
 
 int FilesDecisionModel::columnCount(const QModelIndex& parent) const
