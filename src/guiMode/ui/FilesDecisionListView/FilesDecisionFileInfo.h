@@ -38,6 +38,6 @@ struct FilesDecisionFileInfo
 
 typedef QList<FilesDecisionFileInfo> FilesDecisionFileCopiesList;
 
-typedef QList<FilesDecisionFileCopiesList> FilesDecisionFiles;
+typedef QList<FilesDecisionFileCopiesList*> FilesDecisionFiles;
 
 #endif // FILESDECISIONFILEINFO_H

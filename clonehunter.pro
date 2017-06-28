@@ -58,10 +58,7 @@ SOURCES += main.cpp \
 	src/guiMode/MainWindow.cpp \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.cpp \
     src/guiMode/ui/AutoToolTipDelegate.cpp \
-    src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.cpp \
-    src/guiMode/ui/FilesDecisionListView/TreeItems/treeitem.cpp \
-    src/guiMode/ui/FilesDecisionListView/TreeItems/TreeInnerItem.cpp \
-    src/guiMode/ui/FilesDecisionListView/TreeItems/TreeRootItem.cpp
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.cpp
 
 HEADERS += \
 	src/getFiles.h \
@@ -74,10 +71,7 @@ HEADERS += \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.h \
     src/guiMode/ui/AutoToolTipDelegate.h \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.h \
-    src/guiMode/ui/FilesDecisionListView/FilesDecisionFileInfo.h \
-    src/guiMode/ui/FilesDecisionListView/TreeItems/treeitem.h \
-    src/guiMode/ui/FilesDecisionListView/TreeItems/TreeInnerItem.h \
-    src/guiMode/ui/FilesDecisionListView/TreeItems/TreeRootItem.h
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionFileInfo.h
 
 FORMS += \
 	src/guiMode/MainWindow.ui

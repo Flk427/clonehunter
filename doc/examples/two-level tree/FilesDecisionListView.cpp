@@ -3,12 +3,12 @@
 #include "../AutoToolTipDelegate.h"
 #include "FilesDecisionModel.h"
 
-FilesDecisionListView::FilesDecisionListView(QWidget* parent) :
+FilesDecisionListView::FilesDecisionListView(TreeRootItem* root, QWidget* parent) :
 	QTreeView(parent)
 {
 //	m_filesDecisionModel = new FilesDecisionModel();
 //	setModel(m_filesDecisionModel);
-	_init();
+	_init(root);
 
 //	FilesDecisionModel* m = qobject_cast<FilesDecisionModel*>(model());
 
@@ -23,13 +23,13 @@ FilesDecisionListView::~FilesDecisionListView()
 	//	delete m_filesDecisionModel;
 }
 
-void FilesDecisionListView::setFilesInfo(const FilesDecisionFiles& filesDecisionFiles)
+void FilesDecisionListView::setFilesInfo(TreeRootItem* root)
 {
 	FilesDecisionModel* m = qobject_cast<FilesDecisionModel*>(model());
 
 	if (m)
 	{
-		m->setFilesInfo(filesDecisionFiles);
+		m->setFilesInfo(root);
 	}
 }
 
@@ -47,12 +47,12 @@ void FilesDecisionListView::setFilesInfo(const FilesDecisionFiles& filesDecision
 //	}
 //}
 
-void FilesDecisionListView::_init()
+void FilesDecisionListView::_init(TreeRootItem* root)
 {
 //	setItemDelegate(new QStyledItemDelegate());
 
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	setModel(new FilesDecisionModel());
+	setModel(new FilesDecisionModel(root));
 	setItemDelegate(new AutoToolTipDelegate(this));
 	setAnimated(true);
 
