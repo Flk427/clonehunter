@@ -107,7 +107,7 @@ int startConsoleMode(const PROGRAMPARAMS& params)
 	return 0;
 }
 
-void consoleOut(const QString& text, QString& lang)
+void consoleOut(const QString& text, const QString lang)
 {
 	// http://stackoverflow.com/questions/4766301/windows-console-and-qt-unicode-text
 
