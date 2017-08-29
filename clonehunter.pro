@@ -58,7 +58,11 @@ SOURCES += main.cpp \
 	src/guiMode/MainWindow.cpp \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.cpp \
     src/guiMode/ui/AutoToolTipDelegate.cpp \
-    src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.cpp
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.cpp \
+    src/guiMode/ui/FilesDecisionListWidget/FilesDecisionListWidget.cpp \
+    src/guiMode/ui/DirectoryListSelectorWidget/DirectoryListSelectorWidget.cpp \
+    src/guiMode/ui/PreviewWidget/PreviewWidget.cpp \
+    src/guiMode/ui/ScanControlWidget/ScanControlWidget.cpp
 
 HEADERS += \
 	src/getFiles.h \
@@ -71,10 +75,18 @@ HEADERS += \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.h \
     src/guiMode/ui/AutoToolTipDelegate.h \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.h \
-    src/guiMode/ui/FilesDecisionListView/FilesDecisionFileInfo.h
+    src/guiMode/ui/FilesDecisionListView/FilesDecisionFileInfo.h \
+    src/guiMode/ui/FilesDecisionListWidget/FilesDecisionListWidget.h \
+    src/guiMode/ui/DirectoryListSelectorWidget/DirectoryListSelectorWidget.h \
+    src/guiMode/ui/PreviewWidget/PreviewWidget.h \
+    src/guiMode/ui/ScanControlWidget/ScanControlWidget.h
 
 FORMS += \
-	src/guiMode/MainWindow.ui
+	src/guiMode/MainWindow.ui \
+    src/guiMode/ui/FilesDecisionListWidget/FilesDecisionListWidget.ui \
+    src/guiMode/ui/DirectoryListSelectorWidget/DirectoryListSelectorWidget.ui \
+    src/guiMode/ui/PreviewWidget/PreviewWidget.ui \
+    src/guiMode/ui/ScanControlWidget/ScanControlWidget.ui
 
 RESOURCES += \
 	res/clonehunter.qrc

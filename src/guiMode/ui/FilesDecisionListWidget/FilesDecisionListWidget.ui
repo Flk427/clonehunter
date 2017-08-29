@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FilesDecisionListWidget</class>
+ <widget class="QWidget" name="FilesDecisionListWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>442</width>
+    <height>311</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Duplicated files list:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTreeWidget" name="treeWidget_2">
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>file1</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>c:\directory1\file1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>c:\directory1\file2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>c:\directory3\directory3\file3</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>file4</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>c:\directory3\directory3\asd\file4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>c:\directory2\directory2\directory2\file5</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>file3</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>c:\directory1\file1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>c:\directory1\file2</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>file4</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>c:\directory3\directory3\file4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>c:\directory3\directory3\file2</string>
+         </property>
+        </item>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="maximumSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Select/Deselect</string>
+         </property>
+         <property name="text">
+          <string>+-</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="maximumSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Erase selected file(s)</string>
+         </property>
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
