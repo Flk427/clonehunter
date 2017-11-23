@@ -80,11 +80,13 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 			CloneHunter::consoleOut("  --other: Show possibly dup files for normal or quick mode. Default: false");
 			CloneHunter::consoleOut("  --sort: Sort results by path. Default: sort by hash");
 			CloneHunter::consoleOut("  --lang: l18n (en, ru). Default: en");
+			params.console = true;
 			return 1;
 		}
 		else {
 			CloneHunter::consoleOut(QString(QObject::tr("Error: wrong param: '%1'")).arg(param));
 			CloneHunter::consoleOut("Type: 'CloneHunter.exe --help' for info.");
+			params.console = true;
 			return 2; // params error;
 		}
 	}
