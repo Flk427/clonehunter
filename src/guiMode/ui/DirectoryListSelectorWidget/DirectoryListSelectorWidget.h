@@ -8,12 +8,17 @@ namespace Ui {
 class DirectoryListSelector;
 }
 
+/*!
+   \brief The DirectoryListSelector class
+
+   Не используется модель.
+ */
 class DirectoryListSelector : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit DirectoryListSelector(QWidget *parent = 0);
+	explicit DirectoryListSelector(QWidget *parent = nullptr);
 	~DirectoryListSelector();
 
 	bool isEmpty();
@@ -25,17 +30,17 @@ private:
 	QStringList m_directories;
 
 	void initialize();
-	void setupListWidget();
+	void updateListWidget();
 
 private slots:
-	void addDirectory();
-	void deleteDirectory();
+	void on_pbAdd_clicked();
+	void on_pbDelete_clicked();
 
 public slots:
 	void directoriesClear();
 
 signals:
-	void directoriesChanged(QStringList directories);
+	void directoriesChanged(const QStringList& directories);
 };
 
 #endif // DIRECTORYLISTSELECTOR_H

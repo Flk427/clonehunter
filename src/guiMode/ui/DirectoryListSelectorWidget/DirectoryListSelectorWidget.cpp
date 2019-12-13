@@ -29,16 +29,11 @@ const QStringList&DirectoryListSelector::getDirectories()
 
 void DirectoryListSelector::initialize()
 {
-	ui->pushButton->disconnect();
-	ui->pushButton_2->disconnect();
 	ui->pushButton_3->disconnect();
-
-	connect(ui->pushButton, &QPushButton::clicked, this, &DirectoryListSelector::addDirectory);
-	connect(ui->pushButton_2, &QPushButton::clicked, this, &DirectoryListSelector::deleteDirectory);
 	connect(ui->pushButton_3, &QPushButton::clicked, this, &DirectoryListSelector::directoriesClear);
 }
 
-void DirectoryListSelector::addDirectory()
+void DirectoryListSelector::on_pbAdd_clicked()
 {
 	QString directory = QFileDialog::getExistingDirectory();
 
@@ -46,18 +41,18 @@ void DirectoryListSelector::addDirectory()
 	{
 		m_directories.push_back(directory);
 		qSort(m_directories);
-		setupListWidget();
+		updateListWidget();
 	}
 }
 
-void DirectoryListSelector::deleteDirectory()
+void DirectoryListSelector::on_pbDelete_clicked()
 {
-	QModelIndexList& indexes = ui->listWidget->selectionModel()->selectedIndexes();
+	const QModelIndexList& indexes = ui->listWidget->selectionModel()->selectedIndexes();
 
 	if (!indexes.empty())
 	{
 		m_directories.removeAt(indexes.first().row());
-		setupListWidget();
+		updateListWidget();
 	}
 }
 
@@ -66,11 +61,11 @@ void DirectoryListSelector::directoriesClear()
 	if (!m_directories.empty())
 	{
 		m_directories.clear();
-		setupListWidget();
+		updateListWidget();
 	}
 }
 
-void DirectoryListSelector::setupListWidget()
+void DirectoryListSelector::updateListWidget()
 {
 	ui->listWidget->clear();
 	ui->listWidget->insertItems(0, m_directories);
