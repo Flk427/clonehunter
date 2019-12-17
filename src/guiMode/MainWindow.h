@@ -7,30 +7,19 @@ namespace Ui {
 class MainWindow;
 }
 
-////////////////////////
-//
-class CListWidget : public QWidget
-{
-public:
-	explicit CListWidget(QWidget* parent = 0);
-	void init();
-};
-//
-////////////////////////
-
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget* parent = 0);
+	explicit MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
-
-	void test();
-	void test2();
 
 private:
 	Ui::MainWindow *ui;
+
+private slots:
+	void on_pbStartScan_clicked();
 };
 
 #endif // MAINWINDOW_H

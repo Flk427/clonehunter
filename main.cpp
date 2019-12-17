@@ -9,6 +9,7 @@ Licensed under the Apache License, Version 2.0
 #include "src/programParams.h"
 #include "src/consoleMode/consoleMode.h"
 #include "src/guiMode/MainWindow.h"
+#include "src/guiMode/TestWindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -41,8 +42,12 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
+		TestWindow t;
+		t.show();
+
 		MainWindow w;
 		w.show();
+
 		return app.exec();
 	}
 

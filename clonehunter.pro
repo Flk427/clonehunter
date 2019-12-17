@@ -52,6 +52,8 @@ TRANSLATIONS = i18n/clonehunter_ru.ts
 SOURCES += main.cpp \
 	src/getFiles.cpp \
 	src/calcMd5.cpp \
+    src/guiMode/TestWindow.cpp \
+    src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.cpp \
 	src/programParams.cpp \
 	src/consoleMode/consoleMode.cpp \
 	src/quickSearch.cpp \
@@ -66,6 +68,8 @@ SOURCES += main.cpp \
 
 HEADERS += \
 	src/getFiles.h \
+    src/guiMode/TestWindow.h \
+    src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.h \
 	src/types.h \
 	src/calcMd5.h \
 	src/programParams.h \
@@ -83,6 +87,8 @@ HEADERS += \
 
 FORMS += \
 	src/guiMode/MainWindow.ui \
+    src/guiMode/TestWindow.ui \
+    src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.ui \
     src/guiMode/ui/FilesDecisionListWidget/FilesDecisionListWidget.ui \
     src/guiMode/ui/DirectoryListSelectorWidget/DirectoryListSelectorWidget.ui \
     src/guiMode/ui/PreviewWidget/PreviewWidget.ui \
