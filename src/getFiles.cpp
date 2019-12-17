@@ -91,7 +91,7 @@ void getFilesInfo(const PROGRAMPARAMS& params, FilesInfo& filesInfo)
 
 void sortFilesInfoBySize(FilesInfo& filesInfo)
 {
-	qSort(filesInfo.begin(), filesInfo.end(), fileSizeGreaterThan);
+	std::sort(filesInfo.begin(), filesInfo.end(), fileSizeGreaterThan);
 }
 
 void removeUniqueSizes(FilesInfo& filesInfo)
