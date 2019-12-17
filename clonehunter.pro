@@ -16,6 +16,7 @@ TEMPLATE = app
 
 VERSION = 0.1.4
 
+CONFIG += C++11
 CONFIG += console
 
 CONFIG(release, release|debug) {
@@ -50,14 +51,14 @@ CONFIG(release, release|debug) {
 TRANSLATIONS = i18n/clonehunter_ru.ts
 
 SOURCES += main.cpp \
-	src/getFiles.cpp \
-	src/calcMd5.cpp \
+    src/getFiles.cpp \
+    src/calcMd5.cpp \
     src/guiMode/TestWindow.cpp \
     src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.cpp \
-	src/programParams.cpp \
-	src/consoleMode/consoleMode.cpp \
-	src/quickSearch.cpp \
-	src/guiMode/MainWindow.cpp \
+    src/programParams.cpp \
+    src/consoleMode/consoleMode.cpp \
+    src/quickSearch.cpp \
+    src/guiMode/MainWindow.cpp \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.cpp \
     src/guiMode/ui/AutoToolTipDelegate.cpp \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.cpp \
@@ -67,15 +68,15 @@ SOURCES += main.cpp \
     src/guiMode/ui/ScanControlWidget/ScanControlWidget.cpp
 
 HEADERS += \
-	src/getFiles.h \
+    src/getFiles.h \
     src/guiMode/TestWindow.h \
     src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.h \
-	src/types.h \
-	src/calcMd5.h \
-	src/programParams.h \
-	src/consoleMode/consoleMode.h \
-	src/quickSearch.h \
-	src/guiMode/MainWindow.h \
+    src/types.h \
+    src/calcMd5.h \
+    src/programParams.h \
+    src/consoleMode/consoleMode.h \
+    src/quickSearch.h \
+    src/guiMode/MainWindow.h \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionListView.h \
     src/guiMode/ui/AutoToolTipDelegate.h \
     src/guiMode/ui/FilesDecisionListView/FilesDecisionModel.h \
@@ -86,7 +87,7 @@ HEADERS += \
     src/guiMode/ui/ScanControlWidget/ScanControlWidget.h
 
 FORMS += \
-	src/guiMode/MainWindow.ui \
+    src/guiMode/MainWindow.ui \
     src/guiMode/TestWindow.ui \
     src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.ui \
     src/guiMode/ui/FilesDecisionListWidget/FilesDecisionListWidget.ui \
@@ -95,8 +96,8 @@ FORMS += \
     src/guiMode/ui/ScanControlWidget/ScanControlWidget.ui
 
 RESOURCES += \
-	res/clonehunter.qrc
+    res/clonehunter.qrc
 
 OTHER_FILES += \
-	i18n/clonehunter_ru.ts \
-	i18n/clonehunter_ru.qm
+    i18n/clonehunter_ru.ts \
+    i18n/clonehunter_ru.qm

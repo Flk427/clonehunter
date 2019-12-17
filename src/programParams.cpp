@@ -35,12 +35,18 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 		}
 		else if (param.startsWith("--dir=", Qt::CaseInsensitive))
 		{
-			params.path = param.right(param.size() - 6);
+			QStringList directories = param.right(param.size() - 6).split(";");
 
-			if (!params.path.endsWith('\\') && !params.path.endsWith('/'))
+			for (auto it=directories.begin(); it != directories.end(); ++it)
 			{
-				params.path.append(QDir::separator());
+				if (!(*it).endsWith('\\') && !(*it).endsWith('/'))
+				{
+					(*it).append(QDir::separator());
+				}
 			}
+
+			params.directories.clear();
+			params.directories.append(directories);
 		}
 		else if (param.startsWith("--min=", Qt::CaseInsensitive))
 		{
@@ -72,7 +78,7 @@ int parseParams(PROGRAMPARAMS& params, QStringList arguments)
 		{
 			CloneHunter::consoleOut(QObject::tr("Usage: CloneHunter.exe [--console] [--dir=<path to dir>] [--min=<size>] [--max=<size>] [--sort] [--other] [--quick|--empty] [--lang={en|ru}]"));
 			CloneHunter::consoleOut(QObject::tr("  --console: Run in console mode. Default: console (windowed in future) mode"));
-			CloneHunter::consoleOut(QString("  --dir: Directory to scan (recursively). Default dir: %1").arg(params.path));
+			CloneHunter::consoleOut(QString("  --dir: Directory to scan (recursively). Default dir: %1").arg(params.directories.join("; ")));
 			CloneHunter::consoleOut(QString("  --min: Mininal file size for content scan. Default: %1").arg(params.min));
 			CloneHunter::consoleOut(QString("  --max: Maximal file size for content scan. Default: %1").arg((std::numeric_limits<int>::max)()));
 			CloneHunter::consoleOut("  --quick: Quick scan. Compare file names and sizes only. Default: false");

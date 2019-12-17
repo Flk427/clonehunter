@@ -14,9 +14,9 @@ namespace CloneHunter
 
 struct PROGRAMPARAMS
 {
-	QString path;
-	int min;
-	int max;
+	QStringList directories;
+	unsigned int min;
+	unsigned int max;
 	int sort;
 	bool console;
 	bool other;
@@ -26,7 +26,7 @@ struct PROGRAMPARAMS
 
 	PROGRAMPARAMS()
 	{
-		path = ".";
+		directories << ".";
 		min = 3;
 		max = 0;
 		sort = false;
