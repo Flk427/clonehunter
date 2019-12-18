@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 		t.show();
 
 		MainWindow w;
+		w.setParams(params);
 		w.show();
 
 		return app.exec();

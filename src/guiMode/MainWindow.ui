@@ -29,7 +29,7 @@
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="DirectoriesListWidget" name="widget" native="true"/>
+         <widget class="DirectoriesListWidget" name="directoriesListWidget" native="true"/>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">

@@ -51,6 +51,8 @@ CONFIG(release, release|debug) {
 TRANSLATIONS = i18n/clonehunter_ru.ts
 
 SOURCES += main.cpp \
+    src/GetFilesInfo.cpp \
+    src/GetFilesInfoProcess.cpp \
     src/getFiles.cpp \
     src/calcMd5.cpp \
     src/guiMode/TestWindow.cpp \
@@ -68,6 +70,8 @@ SOURCES += main.cpp \
     src/guiMode/ui/ScanControlWidget/ScanControlWidget.cpp
 
 HEADERS += \
+    src/GetFilesInfo.h \
+    src/GetFilesInfoProcess.h \
     src/getFiles.h \
     src/guiMode/TestWindow.h \
     src/guiMode/ui/DirectoriesListWidget/DirectoriesListWidget.h \
