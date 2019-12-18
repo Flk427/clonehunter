@@ -6,9 +6,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
 	ui->setupUi(this);
 
-	ui->pbarScaning->setVisible(false);
-	ui->pbStopScan->setVisible(false);
-	ui->lbWaitMessage->setVisible(false);
+	switchToBeforeScanMode();
 
 	getFilesInfo = new GetFilesInfo();
 	connect(getFilesInfo, &GetFilesInfo::completed, this, &MainWindow::scanFilesFinished);
@@ -29,19 +27,39 @@ void MainWindow::setParams(const CloneHunter::PROGRAMPARAMS& params)
 	m_params = params;
 }
 
+void MainWindow::switchToBeforeScanMode()
+{
+	ui->stackedWidget->setCurrentIndex(0);
+
+	ui->pbStartScan->setVisible(true);
+	ui->pbarScaning->setVisible(false);
+	ui->pbStopScan->setVisible(false);
+	ui->lbWaitMessage->setVisible(false);
+}
+
+void MainWindow::switchToScaningMode()
+{
+	ui->pbarScaning->setVisible(true);
+	ui->pbStopScan->setVisible(true);
+	ui->pbStartScan->setVisible(false);
+	ui->lbWaitMessage->setVisible(false);
+}
+
+void MainWindow::switchToDuplicatesMode()
+{
+	ui->stackedWidget->setCurrentIndex(1);
+}
+
 void MainWindow::on_pbStartScan_clicked()
 {
 	QStringList directories = ui->stackedWidget->widget(0)->findChild<DirectoriesListWidget*>("directoriesListWidget")->directories();
 
 	if (!directories.empty())
 	{
-		//ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
-		ui->pbarScaning->setVisible(true);
-		ui->pbarScaning->setValue(0);
-		ui->pbStopScan->setVisible(true);
-		ui->pbStartScan->setVisible(false);
-
 		m_params.directories = directories;
+
+		ui->pbarScaning->setValue(0);
+		switchToScaningMode();
 
 		getFilesInfo->setParams(m_params);
 		getFilesInfo->start();
@@ -52,16 +70,13 @@ void MainWindow::scanFilesFinished(CloneHunter::FilesInfo filesInfo)
 {
 	std::for_each(filesInfo.begin(), filesInfo.end(), [&](CloneHunter::FILEINFO fi){qDebug() << fi.name;});
 
-	ui->pbarScaning->setVisible(false);
-	ui->pbStopScan->setVisible(false);
-	ui->pbStartScan->setVisible(true);
+//	switchToDuplicatesMode();
+	switchToBeforeScanMode();
 }
 
 void MainWindow::scanFilesAborted()
 {
 	qDebug() << "MainWindow::scanFilesAborted";
 
-	ui->pbarScaning->setVisible(false);
-	ui->pbStopScan->setVisible(false);
-	ui->pbStartScan->setVisible(true);
+	switchToBeforeScanMode();
 }

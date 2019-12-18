@@ -27,6 +27,10 @@ private:
 	CloneHunter::FilesInfo m_filesInfo;
 	GetFilesInfo* getFilesInfo;
 
+	void switchToBeforeScanMode();
+	void switchToScaningMode();
+	void switchToDuplicatesMode();
+
 private slots:
 	void on_pbStartScan_clicked();
 	void scanFilesFinished(CloneHunter::FilesInfo filesInfo);
