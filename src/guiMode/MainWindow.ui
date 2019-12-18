@@ -54,6 +54,19 @@
            </widget>
           </item>
           <item>
+           <widget class="QProgressBar" name="pbarScaning">
+            <property name="value">
+             <number>24</number>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pbStopScan">
             <property name="text">
              <string>Stop scan</string>

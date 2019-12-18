@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
 	ui->setupUi(this);
 
+	ui->pbarScaning->setVisible(false);
 	ui->pbStopScan->setVisible(false);
 	ui->lbWaitMessage->setVisible(false);
 }
@@ -17,6 +18,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pbStartScan_clicked()
 {
 	//ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+	ui->pbarScaning->setVisible(true);
 	ui->pbStopScan->setVisible(true);
 	ui->pbStartScan->setVisible(false);
 }
