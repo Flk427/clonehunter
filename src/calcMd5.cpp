@@ -141,7 +141,7 @@ void removeUniqueMd5(FilesInfo& filesInfo)
 
 void sortFilesInfoByMd5(FilesInfo& filesInfo)
 {
-	qSort(filesInfo.begin(), filesInfo.end(), fileMd5LessThan);
+	std::sort(filesInfo.begin(), filesInfo.end(), [&](const FILEINFO& e1, const FILEINFO& e2){return e1.md5 < e2.md5;});
 }
 
 }
