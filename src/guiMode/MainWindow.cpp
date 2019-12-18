@@ -31,6 +31,8 @@ void MainWindow::switchToBeforeScanMode()
 {
 	ui->stackedWidget->setCurrentIndex(0);
 
+	ui->directoriesListWidget->setEnabled(true);
+
 	ui->pbStartScan->setVisible(true);
 	ui->pbarScaning->setVisible(false);
 	ui->pbStopScan->setVisible(false);
@@ -39,6 +41,8 @@ void MainWindow::switchToBeforeScanMode()
 
 void MainWindow::switchToScaningMode()
 {
+	ui->directoriesListWidget->setEnabled(false);
+
 	ui->pbarScaning->setVisible(true);
 	ui->pbStopScan->setVisible(true);
 	ui->pbStartScan->setVisible(false);
@@ -52,7 +56,7 @@ void MainWindow::switchToDuplicatesMode()
 
 void MainWindow::on_pbStartScan_clicked()
 {
-	QStringList directories = ui->stackedWidget->widget(0)->findChild<DirectoriesListWidget*>("directoriesListWidget")->directories();
+	QStringList directories = ui->directoriesListWidget->directories();
 
 	if (!directories.empty())
 	{
