@@ -11,6 +11,8 @@ Licensed under the Apache License, Version 2.0
 
 namespace CloneHunter {
 
+static FilesInfo readDir(const QString& path);
+
 static bool fileSizeGreaterThan( const FILEINFO & e1, const FILEINFO & e2 )
 {
 	if (e1.size > e2.size)
@@ -32,6 +34,18 @@ static bool fileFullNameLessThan( const FILEINFO & e1, const FILEINFO & e2 )
 	else
 	{
 		return false;
+	}
+}
+
+/*
+	TODO: Следить, чтобы каталоги не были подкаталогами друг друга.
+*/
+void getFilesInfo(const PROGRAMPARAMS& params, FilesInfo& filesInfo)
+{
+	for(auto it=params.directories.begin(); it!=params.directories.end(); ++it)
+	{
+		FilesInfo directoryFilesInfo = readDir(*it /*, params.min, params.max*/);
+		filesInfo.append(directoryFilesInfo);
 	}
 }
 
@@ -71,22 +85,6 @@ static FilesInfo readDir(const QString& path)
 	}
 
 	return filesInfo;
-}
-
-/*
-	TODO: Заменить params.path на QList<QString>. Для поиска сразу в нескольких каталогах.
-	При этом следить, чтобы каталоги не были подкаталогами друг друга.
-*/
-void getFilesInfo(const PROGRAMPARAMS& params, FilesInfo& filesInfo)
-{
-	for(auto it=params.directories.begin(); it!=params.directories.end(); ++it)
-	{
-		FilesInfo directoryFilesInfo = readDir(*it /*, params.min, params.max*/);
-		filesInfo.append(directoryFilesInfo);
-	}
-
-//	QString rootDir = params.directories.first();
-//	filesInfo = readDir(rootDir/*, params.min, params.max*/);
 }
 
 void sortFilesInfoBySize(FilesInfo& filesInfo)
@@ -137,7 +135,7 @@ void removeUniqueSizes(FilesInfo& filesInfo)
 
 void sortFilesInfoByPath(FilesInfo& filesInfo)
 {
-	qSort(filesInfo.begin(), filesInfo.end(), fileFullNameLessThan);
+	std::sort(filesInfo.begin(), filesInfo.end(), fileFullNameLessThan);
 }
 
 }
