@@ -42,6 +42,7 @@ signals:
 	void completed(CloneHunter::FilesInfo filesInfo);
 	//! Сигнал о прерывании поиска.
 	void aborted();
+	void notifyProgress(unsigned percent);
 };
 
 #endif // GETFILESINFO_H

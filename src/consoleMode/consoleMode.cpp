@@ -39,7 +39,7 @@ static void searchQuick(FilesInfo& filesInfo);
 static void searchDeep(FilesInfo& filesInfo, const PROGRAMPARAMS& params);
 
 static unsigned printQuickDupFiles(const FilesInfo& filesInfo, const bool empty);
-static unsigned printDupFiles(const FilesInfo& filesInfo, const bool quickMode = false);
+unsigned printDupFiles(const FilesInfo& filesInfo, const bool quickMode = false);
 static void printOtherFiles(const FilesInfo& filesInfo, const bool quickMode);
 static void printEmptyFiles(const FilesInfo& filesInfo);
 
@@ -103,7 +103,7 @@ int startConsoleMode(const PROGRAMPARAMS& params)
 		}
 	}
 
-	consoleOut(QString(QObject::tr("Time: %1")).arg(time(0) - tStart));
+	consoleOut(QString(QObject::tr("Time: %1")).arg(time(nullptr) - tStart));
 	return 0;
 }
 

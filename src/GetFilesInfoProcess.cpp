@@ -1,7 +1,11 @@
 #include <QDir>
 #include <QFile>
 #include <QDebug>
+#include <QCryptographicHash>
 #include "GetFilesInfoProcess.h"
+#include "consoleMode/consoleMode.h"
+#include "getFiles.h"
+#include "calcMd5.h"
 
 GetFilesInfoProcess::GetFilesInfoProcess(const CloneHunter::PROGRAMPARAMS& params) : QObject(nullptr),
 	m_stop(true),
@@ -18,9 +22,29 @@ GetFilesInfoProcess::~GetFilesInfoProcess()
 void GetFilesInfoProcess::process()
 {
 	m_stop = false;
-
 	m_filesInfo.clear();
 	getFilesInfo(m_params, m_filesInfo);
+
+	int totalFilesCount = m_filesInfo.count();
+
+	CloneHunter::consoleOut(QString(QObject::tr("Total files: %1")).arg(totalFilesCount));
+
+	if (!m_stop && !m_filesInfo.empty())
+	{
+		searchDeep(m_filesInfo, m_params);
+
+		if (!m_stop)
+		{
+			CloneHunter::printDupFiles(m_filesInfo, false);
+			emit notifyFilesInfo(m_filesInfo);
+		}
+	}
+
+	if (m_stop)
+	{
+		emit notifyAbort();
+	}
+
 	emit finished();
 }
 
@@ -39,12 +63,9 @@ void GetFilesInfoProcess::getFilesInfo(const CloneHunter::PROGRAMPARAMS& params,
 
 		if (m_stop)
 		{
-			emit notifyAbort();
 			return;
 		}
 	}
-
-	emit notifyFilesInfo(filesInfo);
 }
 
 CloneHunter::FilesInfo GetFilesInfoProcess::readDir(const QString& path)
@@ -94,4 +115,96 @@ CloneHunter::FilesInfo GetFilesInfoProcess::readDir(const QString& path)
 	}
 
 	return filesInfo;
+}
+
+void GetFilesInfoProcess::searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params)
+{
+	CloneHunter::consoleOut(QObject::tr("Sort by size"));
+	sortFilesInfoBySize(filesInfo);
+
+	CloneHunter::consoleOut(QObject::tr("Filter by size"));
+	removeUniqueSizes(filesInfo);
+
+	CloneHunter::consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
+
+	// For sequental file access.
+	sortFilesInfoByPath(filesInfo);
+
+	CloneHunter::consoleOut(QObject::tr("Calc MD5"));
+	this->calcFilesMd5(filesInfo, params);
+
+	CloneHunter::consoleOut(QObject::tr("Sort by MD5"));
+	sortFilesInfoByMd5(filesInfo);
+
+	CloneHunter::consoleOut(QObject::tr("Filter by MD5"));
+	removeUniqueMd5(filesInfo);
+
+	CloneHunter::consoleOut(QString(QObject::tr("Files count: %1")).arg(filesInfo.size()));
+
+	if (params.sort)
+	{
+		sortFilesInfoByPath(filesInfo);
+	}
+}
+
+void GetFilesInfoProcess::calcFilesMd5(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params)
+{
+	qint64 totalSize = CloneHunter::getFileSizes(filesInfo, params);
+	qint64 scannedSize(0);
+	unsigned oldCto = 99;
+	unsigned i(0);
+
+	CloneHunter::consoleOut(QString(QObject::tr("Total size: %1 Count: %2")).arg(totalSize).arg(filesInfo.size()));
+
+	for (CloneHunter::FilesInfo::iterator it = filesInfo.begin(); it != filesInfo.end(); ++it)
+	{
+		i++;
+
+		if (it->size != 0 && it->size >= params.min && (it->size <= params.max))
+		{
+			QFile file;
+			file.setFileName(it->path + "/" + it->name);
+
+			if (file.open(QIODevice::ReadOnly))
+			{
+				QByteArray content;
+				QCryptographicHash hash(QCryptographicHash::Md5);
+				hash.reset();
+
+				do
+				{
+					if (m_stop)
+					{
+						return;
+					}
+
+					content = file.read(8*1024*1024);
+
+					if (content.size() != 0)
+					{
+						hash.addData(content);
+
+						{ // TODO: вынести отдельно
+							scannedSize += content.size();
+							unsigned cto = (100.0 * scannedSize / totalSize);
+
+							emit notifyProgress(cto);
+
+							if (oldCto / 10 != cto / 10)
+							{
+								oldCto = cto;
+								CloneHunter::consoleOut(QString("%1%").arg(cto - cto % 10));
+							}
+						}
+					}
+				}
+				while (content.size() != 0);
+
+				file.close();
+//				QByteArray md5hash = hash.result();
+//				it->md5 = QString(md5hash.toHex());
+				it->md5 = hash.result();
+			}
+		}
+	}
 }

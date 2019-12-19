@@ -13,20 +13,20 @@ Licensed under the Apache License, Version 2.0
 namespace CloneHunter
 {
 
-static bool fileMd5LessThan( const FILEINFO & e1, const FILEINFO & e2 )
-{
-	//if (QString(e1.md5array.toHex()) < QString(e2.md5array.toHex()))
-	if (e1.md5 < e2.md5)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+//static bool fileMd5LessThan( const FILEINFO & e1, const FILEINFO & e2 )
+//{
+//	//if (QString(e1.md5array.toHex()) < QString(e2.md5array.toHex()))
+//	if (e1.md5 < e2.md5)
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 
-static qint64 getFileSizes(const FilesInfo& filesInfo, const PROGRAMPARAMS& params)
+qint64 getFileSizes(const FilesInfo& filesInfo, const PROGRAMPARAMS& params)
 {
 	qint64 total(0);
 

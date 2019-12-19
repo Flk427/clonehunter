@@ -19,18 +19,21 @@ signals:
 	void notifyFilesInfo(CloneHunter::FilesInfo filesInfo);
 	//! Сигнал о прерывании поиска.
 	void notifyAbort();
+	void notifyProgress(unsigned percent);
 
 public slots:
 	void process();
 	void abort();
 
-	void getFilesInfo(const CloneHunter::PROGRAMPARAMS& params, CloneHunter::FilesInfo& filesInfo);
-	CloneHunter::FilesInfo readDir(const QString& path);
-
 private:
 	bool m_stop;
 	CloneHunter::PROGRAMPARAMS m_params;
 	CloneHunter::FilesInfo m_filesInfo;
+
+	void getFilesInfo(const CloneHunter::PROGRAMPARAMS& params, CloneHunter::FilesInfo& filesInfo);
+	CloneHunter::FilesInfo readDir(const QString& path);
+	void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params);
+	void calcFilesMd5(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params);
 };
 
 #endif // GETFILESINFOPROCESS_H

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 	getFilesInfo = new GetFilesInfo();
 	connect(getFilesInfo, &GetFilesInfo::completed, this, &MainWindow::scanFilesFinished);
 	connect(getFilesInfo, &GetFilesInfo::aborted, this, &MainWindow::scanFilesAborted);
+	connect(getFilesInfo, &GetFilesInfo::notifyProgress, ui->pbarScaning, &QProgressBar::setValue);
 
 	connect(ui->pbStopScan, &QPushButton::clicked, getFilesInfo, &GetFilesInfo::abort);
 }

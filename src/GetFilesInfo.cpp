@@ -51,6 +51,7 @@ void GetFilesInfo::createThreadProcess(QThread* thread)
 
 	connect(m_threadProcess, &GetFilesInfoProcess::notifyAbort, this, &GetFilesInfo::aborted);
 	connect(m_threadProcess, &GetFilesInfoProcess::notifyFilesInfo, this, &GetFilesInfo::completed);
+	connect(m_threadProcess, &GetFilesInfoProcess::notifyProgress, this, &GetFilesInfo::notifyProgress);
 
 	m_threadProcess->moveToThread(thread);
 }
