@@ -7,8 +7,10 @@ Licensed under the Apache License, Version 2.0
 #define TYPES
 
 #include <QList>
+#include <QVector>
 #include <QString>
 #include <QDateTime>
+#include <QHash>
 
 namespace CloneHunter
 {
@@ -31,7 +33,25 @@ struct FILEINFO
 
 typedef QList<FILEINFO> FilesInfo;
 
+struct DUPFILEINFO
+{
+	QString path;
+	QString name;
+	QDateTime lastModified;
+};
+
+struct DUPFILESINFO
+{
+	//! Индекс родителя. Необходим для построения модели.
+	int parentIndex;
+	qint64 size;
+	QByteArray md5;
+	QList<DUPFILEINFO> files;
+};
+
+//! Модель для QTreeView.
+typedef QVector<DUPFILESINFO> DupFiles;
+
 }
 
 #endif // TYPES
-

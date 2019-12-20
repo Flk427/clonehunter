@@ -11,7 +11,7 @@ GetFilesInfoProcess::GetFilesInfoProcess(const CloneHunter::PROGRAMPARAMS& param
 	m_stop(true),
 	m_params(params)
 {
-	qRegisterMetaType<CloneHunter::FilesInfo>("CloneHunter::FilesInfo");
+	qRegisterMetaType<CloneHunter::DupFiles>("CloneHunter::DupFiles");
 }
 
 GetFilesInfoProcess::~GetFilesInfoProcess()
@@ -36,7 +36,8 @@ void GetFilesInfoProcess::process()
 		if (!m_stop)
 		{
 			CloneHunter::printDupFiles(m_filesInfo, false);
-			emit notifyFilesInfo(m_filesInfo);
+			CloneHunter::DupFiles dupFiles = getDupFiles(m_filesInfo);
+			emit notifyFilesInfo(dupFiles);
 		}
 	}
 
@@ -186,7 +187,7 @@ void GetFilesInfoProcess::calcFilesMd5(CloneHunter::FilesInfo& filesInfo, const 
 
 						{ // TODO: вынести отдельно
 							scannedSize += content.size();
-							unsigned cto = (100.0 * scannedSize / totalSize);
+							unsigned cto = unsigned(100 * scannedSize / totalSize);
 
 							emit notifyProgress(cto);
 
@@ -201,10 +202,46 @@ void GetFilesInfoProcess::calcFilesMd5(CloneHunter::FilesInfo& filesInfo, const 
 				while (content.size() != 0);
 
 				file.close();
-//				QByteArray md5hash = hash.result();
-//				it->md5 = QString(md5hash.toHex());
 				it->md5 = hash.result();
 			}
 		}
 	}
+}
+
+CloneHunter::DupFiles GetFilesInfoProcess::getDupFiles(const CloneHunter::FilesInfo& filesInfo)
+{
+	CloneHunter::DupFiles dupFiles;
+	dupFiles.reserve(filesInfo.size() / 2);
+	QByteArray oldMD5;
+
+	CloneHunter::DUPFILESINFO dupfilesinfo;
+	CloneHunter::DUPFILEINFO dupfileinfo;
+
+	for (auto it=filesInfo.begin(); it!=filesInfo.end(); ++it)
+	{
+		if (!oldMD5.isEmpty() && oldMD5 != (*it).md5)
+		{
+			dupFiles.push_back(dupfilesinfo);
+			dupfilesinfo.files.clear();
+		}
+
+		dupfilesinfo.md5 = (*it).md5;
+		dupfilesinfo.size = (*it).size;
+
+		dupfileinfo.name = (*it).name;
+		dupfileinfo.path = (*it).path;
+		dupfileinfo.lastModified = (*it).lastModified;
+		dupfilesinfo.parentIndex = dupFiles.length();
+
+		dupfilesinfo.files.push_back(dupfileinfo);
+
+		oldMD5 = (*it).md5;
+	}
+
+	if (!dupfilesinfo.files.isEmpty())
+	{
+		dupFiles.push_back(dupfilesinfo);
+	}
+
+	return dupFiles;
 }

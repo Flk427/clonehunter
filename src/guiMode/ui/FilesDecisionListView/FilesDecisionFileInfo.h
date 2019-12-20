@@ -8,6 +8,7 @@
 #include <QHash>
 #include "../../../types.h"
 
+/*
 struct FilesDecisionFileInfo
 {
 	QString path;
@@ -39,5 +40,6 @@ struct FilesDecisionFileInfo
 typedef QList<FilesDecisionFileInfo> FilesDecisionFileCopiesList;
 
 typedef QList<FilesDecisionFileCopiesList*> FilesDecisionFiles;
+*/
 
 #endif // FILESDECISIONFILEINFO_H

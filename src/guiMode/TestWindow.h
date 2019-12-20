@@ -26,7 +26,7 @@ public:
 	explicit TestWindow(QWidget* parent = nullptr);
 	~TestWindow();
 
-	void test();
+//	void test();
 	void test2();
 
 private:

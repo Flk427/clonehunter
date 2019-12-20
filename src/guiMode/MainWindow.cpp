@@ -71,12 +71,13 @@ void MainWindow::on_pbStartScan_clicked()
 	}
 }
 
-void MainWindow::scanFilesFinished(CloneHunter::FilesInfo filesInfo)
+void MainWindow::scanFilesFinished(CloneHunter::DupFiles dupFiles)
 {
-	std::for_each(filesInfo.begin(), filesInfo.end(), [&](CloneHunter::FILEINFO fi){qDebug() << fi.name;});
+	std::for_each(dupFiles.begin(), dupFiles.end(), [&](CloneHunter::DUPFILESINFO fi){qDebug() << fi.files.first().name << " | " << fi.files.count();});
 
-//	switchToDuplicatesMode();
-	switchToBeforeScanMode();
+	ui->treeView->setFilesInfo(dupFiles);
+	switchToDuplicatesMode();
+//	switchToBeforeScanMode();
 }
 
 void MainWindow::scanFilesAborted()

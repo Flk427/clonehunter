@@ -16,7 +16,7 @@ signals:
 	//! Сигнал потоку о завершении работы.
 	void finished();
 	//! Сигнал с результатами работы.
-	void notifyFilesInfo(CloneHunter::FilesInfo filesInfo);
+	void notifyFilesInfo(CloneHunter::DupFiles);
 	//! Сигнал о прерывании поиска.
 	void notifyAbort();
 	void notifyProgress(unsigned percent);
@@ -34,6 +34,7 @@ private:
 	CloneHunter::FilesInfo readDir(const QString& path);
 	void searchDeep(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params);
 	void calcFilesMd5(CloneHunter::FilesInfo& filesInfo, const CloneHunter::PROGRAMPARAMS& params);
+	CloneHunter::DupFiles getDupFiles(const CloneHunter::FilesInfo& filesInfo);
 };
 
 #endif // GETFILESINFOPROCESS_H

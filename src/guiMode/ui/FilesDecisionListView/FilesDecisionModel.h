@@ -20,7 +20,7 @@ public:
 	FilesDecisionModel();
 	virtual ~FilesDecisionModel();
 
-	void setFilesInfo(const FilesDecisionFiles& filesDecisionFiles);
+	void setFilesInfo(const CloneHunter::DupFiles& dupFiles);
 
 	// QAbstractItemModel interface
 public:
@@ -33,7 +33,8 @@ public:
 	virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
 private:
-	FilesDecisionFiles m_filesDecisionFiles;
+	//FilesDecisionFiles m_filesDecisionFiles;
+	CloneHunter::DupFiles m_dupFiles;
 
 
 	// QAbstractItemModel interface

@@ -13,15 +13,12 @@
 class FilesDecisionListView : public QTreeView
 {
 public:
-	//explicit FilesDecisionListView(QWidget* parent);
 	explicit FilesDecisionListView(QWidget* parent);
 	~FilesDecisionListView();
 
-	void setFilesInfo(const FilesDecisionFiles& filesDecisionFiles);
-//	void setFilesInfo(TreeRootItem* root);
+	void setFilesInfo(const CloneHunter::DupFiles& dupFiles);
 
 private:
-//	FilesDecisionModel* m_filesDecisionModel;
 	void _init();
 };
 

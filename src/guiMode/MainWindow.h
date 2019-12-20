@@ -5,6 +5,7 @@
 #include "../types.h"
 #include "../programParams.h"
 #include "../GetFilesInfo.h"
+#include "ui/FilesDecisionListView/FilesDecisionListView.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,7 +34,7 @@ private:
 
 private slots:
 	void on_pbStartScan_clicked();
-	void scanFilesFinished(CloneHunter::FilesInfo filesInfo);
+	void scanFilesFinished(CloneHunter::DupFiles dupFiles);
 	void scanFilesAborted();
 };
 

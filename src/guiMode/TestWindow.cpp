@@ -14,7 +14,7 @@ TestWindow::TestWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::TestWi
 	ui->setupUi(this);
 	ui->treeWidget->setItemDelegate(new AutoToolTipDelegate( ui->treeWidget ));
 
-	test();
+//	test();
 //	test2();
 }
 
@@ -23,6 +23,7 @@ TestWindow::~TestWindow()
 	delete ui;
 }
 
+/*
 void TestWindow::test()
 {
 	FilesDecisionListView* v = new FilesDecisionListView(ui->centralwidget);
@@ -60,6 +61,7 @@ void TestWindow::test()
 
 	v->setFilesInfo(filesTree);
 }
+*/
 
 void TestWindow::test2()
 {

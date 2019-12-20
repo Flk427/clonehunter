@@ -39,7 +39,7 @@ public slots:
 
 signals:
 	//! Сигнал об успешном завершении.
-	void completed(CloneHunter::FilesInfo filesInfo);
+	void completed(CloneHunter::DupFiles);
 	//! Сигнал о прерывании поиска.
 	void aborted();
 	void notifyProgress(unsigned percent);
