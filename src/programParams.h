@@ -27,7 +27,7 @@ struct PROGRAMPARAMS
 	PROGRAMPARAMS()
 	{
 		directories << ".";
-		min = 3;
+		min = 4;
 		max = 0;
 		sort = false;
 		console = false;

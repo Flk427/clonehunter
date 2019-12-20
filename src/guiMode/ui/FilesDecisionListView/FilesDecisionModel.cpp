@@ -101,7 +101,10 @@ QVariant FilesDecisionModel::data(const QModelIndex& index, int role) const
 		case Qt::DisplayRole:
 			if (index.parent() == QModelIndex())
 			{
-				return QString("%1 (%2)").arg(m_dupFiles[index.row()].files.first().name).arg(m_dupFiles[index.row()].files.length());
+				return QString("%1 (файлов: %2, размер: %3)")
+						.arg(m_dupFiles[index.row()].files.first().name)
+						.arg(m_dupFiles[index.row()].files.length())
+						.arg(m_dupFiles[index.row()].size);
 			}
 			else
 			{

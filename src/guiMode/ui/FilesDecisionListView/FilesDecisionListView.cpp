@@ -26,7 +26,7 @@ void FilesDecisionListView::setFilesInfo(const CloneHunter::DupFiles& dupFiles)
 void FilesDecisionListView::_init()
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	//setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	setModel(new FilesDecisionModel());
 	setItemDelegate(new AutoToolTipDelegate(this));
 	setAnimated(true);
