@@ -71,7 +71,7 @@ int FilesDecisionModel::rowCount(const QModelIndex& parent) const
 	}
 	else
 	{
-		if (parent.internalPointer() == nullptr)
+		if (parent.parent() == QModelIndex())
 		{
 			if (parent.row() < m_dupFiles.size())
 			{
@@ -96,20 +96,45 @@ QVariant FilesDecisionModel::data(const QModelIndex& index, int role) const
 		return QVariant();
 	}
 
-	if (role != Qt::DisplayRole)
+	switch (role)
 	{
-		return QVariant();
+		case Qt::DisplayRole:
+			if (index.parent() == QModelIndex())
+			{
+				return QString("%1 (%2)").arg(m_dupFiles[index.row()].files.first().name).arg(m_dupFiles[index.row()].files.length());
+			}
+			else
+			{
+				CloneHunter::DUPFILESINFO* info = static_cast<CloneHunter::DUPFILESINFO*>(index.internalPointer());
+				return info->files.at(index.row()).path + QDir::separator() + info->files.at(index.row()).name;
+			}
+
+//		case Qt::ToolTipRole:
+//			return "tool tip";
+
+		case Qt::UserRole+3:
+			if (index.parent() == QModelIndex())
+			{
+				QStringList filesPaths;
+
+				for(auto it=m_dupFiles[index.row()].files.begin(); it!=m_dupFiles[index.row()].files.end(); ++it)
+				{
+					filesPaths.push_back(QString((*it).path + QDir::separator() + (*it).name).toHtmlEscaped());
+				}
+
+				return QString("<div><pre>Файлов: %1<br>Размер: %2<br>%3</pre></div>")
+						.arg(m_dupFiles[index.row()].files.length())
+						.arg(m_dupFiles[index.row()].size)
+						.arg(filesPaths.join("<br>"));
+			}
+			else
+			{
+				CloneHunter::DUPFILESINFO* info = static_cast<CloneHunter::DUPFILESINFO*>(index.internalPointer());
+				return info->files.at(index.row()).path + QDir::separator() + info->files.at(index.row()).name;
+			}
 	}
 
-	if (index.internalPointer() == nullptr)
-	{
-		return QString("%1 (%2)").arg(m_dupFiles[index.row()].files.first().name).arg(m_dupFiles[index.row()].files.length());
-	}
-	else
-	{
-		CloneHunter::DUPFILESINFO* info = static_cast<CloneHunter::DUPFILESINFO*>(index.internalPointer());
-		return info->files.at(index.row()).path + QDir::separator() + info->files.at(index.row()).name;
-	}
+	return QVariant();
 }
 
 Qt::ItemFlags FilesDecisionModel::flags(const QModelIndex& index) const

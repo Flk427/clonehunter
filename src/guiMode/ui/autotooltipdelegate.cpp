@@ -21,15 +21,14 @@ bool AutoToolTipDelegate::helpEvent(QHelpEvent* e, QAbstractItemView* view,
 		QRect rect = view->visualRect(index);
 		QSize size = sizeHint(option, index);
 
-		if ( rect.width() < size.width() )
+		// Если элемент не может быть целиком отображён в представлении, показывается подсказка.
+		if (index.parent()==QModelIndex() || rect.width() < size.width())
 		{
-			QVariant tooltip = index.data(Qt::DisplayRole);
+			QVariant tooltipText = index.data(Qt::UserRole+3);
 
-			if (tooltip.canConvert<QString>())
+			if (tooltipText.canConvert<QString>())
 			{
-				// QToolTip::showText( e->globalPos(), QString( "<div>%1</div>" )
-				QToolTip::showText(e->globalPos(), QString("<div><pre>%1<br>filename.ext<br>64 M<br>12.07.2012<br>5b251407e8038b9ff51ffbe17abd79e0</pre></div>")
-								   .arg(QString(tooltip.toString()).toHtmlEscaped()), view);
+				QToolTip::showText(e->globalPos(), tooltipText.toString(), view);
 				return true;
 			}
 		}

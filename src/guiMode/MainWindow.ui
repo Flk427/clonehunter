@@ -24,7 +24,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -98,16 +98,11 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_2">
-       <widget class="FilesDecisionListView" name="treeView">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>70</y>
-          <width>561</width>
-          <height>401</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="FilesDecisionListView" name="treeView"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
