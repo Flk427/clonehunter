@@ -100,7 +100,7 @@
       <widget class="QWidget" name="page_2">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="FilesDecisionListView" name="treeView"/>
+         <widget class="FilesDecisionListView" name="filesDecisionListView"/>
         </item>
        </layout>
       </widget>
@@ -114,7 +114,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

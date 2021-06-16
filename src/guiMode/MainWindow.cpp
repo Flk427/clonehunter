@@ -75,7 +75,7 @@ void MainWindow::scanFilesFinished(CloneHunter::DupFiles dupFiles)
 {
 	std::for_each(dupFiles.begin(), dupFiles.end(), [&](CloneHunter::DUPFILESINFO fi){qDebug() << fi.files.first().name << " | " << fi.files.count();});
 
-	ui->treeView->setFilesInfo(dupFiles);
+    ui->filesDecisionListView->setFilesInfo(dupFiles);
 	switchToDuplicatesMode();
 //	switchToBeforeScanMode();
 }
